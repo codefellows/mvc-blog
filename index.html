@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab|Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/vendor/styles/normalize.css">
+    <link rel="stylesheet" href="/styles/icons.css">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="stylesheet" href="/styles/modules.css">
+    <link rel="stylesheet" href="/vendor/styles/railscasts.css">
+    <link rel="stylesheet" href="http://css-spinners.com/css/spinner/throbber.css" type="text/css">
+
+  </head>
+  <body>
+    <header class="site-header clearfix">
+      <section class="heading-group-h1">
+        <h1 class="site-title">
+          Kilovolt Blog!
+        </h1>
+        <h2>The shocking power of static pages</h2>
+      </section>
+      <nav class="main-nav">
+        <div class="icon-menu"></div>
+        <ul>
+          <li><a href="/" class="icon-home"> Home</a></li>
+          <li><a href="/about" class="icon-address-book"> About</a></li>
+          <li><a href="http://twitter.com/brookr" target="_blank" class="icon-twitter3"> Twitter</a></li>
+          <li><a href="http://github.com/brookr" target="_blank" class="icon-github"> GitHub</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section id="articles" class="tab-content">
+      </section>
+      <section id="about" class="tab-content">
+        <header>
+          Welcome to my Blog
+        </header>
+        <section>
+          <h1>Recent Work:</h1>
+          <ul>
+          </ul>
+        </section>
+      </section>
+
+      </section>
+    </main>
+    <footer>
+      <div>
+        &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
+      </div>
+    </footer>
+
+    <!-- 3rd-party libraries: -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
+    <script src="/vendor/scripts/page.js"></script>
+    <script src="/vendor/scripts/html5sql.js"></script>
+    <script src="/vendor/scripts/marked.js"></script>
+    <script src="/vendor/scripts/highlight.pack.js"></script>
+
+    <!-- Our library files -->
+    <script src="/scripts/webdb.js"></script>
+    <script src="/scripts/util.js"></script>
+
+    <!-- Private data -->
+    <script src="/scripts/githubToken.js"></script>
+
+    <!-- APP CODE: -->
+    <!-- Model: -->
+    <script src="/scripts/article.js"></script>
+    <script src="/scripts/repo.js"></script>
+
+    <!-- View: -->
+    <script src="/scripts/articleView.js"></script>
+    <script src="/scripts/repoView.js"></script>
+
+    <!-- Controller? -->
+    <script src="/scripts/articlesController.js"></script>
+    <script src="/scripts/reposController.js"></script>
+
+    <!-- Router? -->
+    <script src="/scripts/router.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,28 @@
+/*
+Colors from this palette:
+http://paletton.com/#uid=72Q0F0kkWlSalxnfDrbq9gEvybf
+*/
+
+.color-primary-0 { color: #2F8935 }	/* Main Primary color: green */
+.color-primary-1 { color: #89CB8E }
+.color-primary-2 { color: #57AA5D }
+.color-primary-3 { color: #136819 }
+.color-primary-4 { color: #014606 }
+
+.color-secondary-1-0 { color: #2B546F }	/* Main Secondary color (1) blue */
+.color-secondary-1-1 { color: #7493A7 }
+.color-secondary-1-2 { color: #4B718A }
+.color-secondary-1-3 { color: #143B55 }
+.color-secondary-1-4 { color: #042439 }
+
+.color-secondary-2-0 { color: #AE7C3C }	/* Main Secondary color (2) brown */
+.color-secondary-2-1 { color: #FFDBAD }
+.color-secondary-2-2 { color: #D9AA6F }
+.color-secondary-2-3 { color: #855518 }
+.color-secondary-2-4 { color: #5A3301 }
+
+.color-complement-0 { color: #AE3F3C }	/* Main Complement color red */
+.color-complement-1 { color: #FFAFAD }
+.color-complement-2 { color: #D9726F }
+.color-complement-3 { color: #851B18 }
+.color-complement-4 { color: #5A0401 }

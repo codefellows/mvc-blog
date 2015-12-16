@@ -1,0 +1,17 @@
+<article
+  class="clearfix"
+  data-author="{{authorSlug}}"
+  data-category="{{categorySlug}}">
+  <header>
+    <h1>{{title}}</h1>
+    <div class="byline">
+      By <address><a href="{{authorUrl}}">{{author}}</a></address>
+      {{publishStatus}}
+      {{#if_admin}}
+        <a href="editor/articles.html?id={{id}}&amp;admin=true" class="edit-btn">Edit</a>
+      {{/if_admin}}
+    </div>
+  </header>
+  <section class="article-body">{{{body}}}</section>
+  <a href="#" class="read-on">Read on &rarr;</a>
+</article>
