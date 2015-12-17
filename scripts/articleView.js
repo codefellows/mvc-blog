@@ -1,13 +1,6 @@
 var articleView = {};
 
-// articleTemplate -> renderGroup -> render (one)
-articleView.loadTemplate = function(articles) {
-  $.get('/templates/article.html', function(data, msg, xhr) {
-    articleView.template = Handlebars.compile(data);
-    articleView.renderGroup(articles);
-  });
-};
-
+// renderGroup -> render (one)
 articleView.renderGroup = function(articleList) {
 
   $('#articles')
@@ -18,10 +11,6 @@ articleView.renderGroup = function(articleList) {
       })
     )
     .siblings().hide();
-};
-
-articleView.index = function() {
-  articleView.loadTemplate(Article.all);
 };
 
 articleView.render = function(article) {
@@ -35,6 +24,10 @@ articleView.render = function(article) {
   return articleView.template(article);
 };
 
+articleView.index = function() {
+  articleView.renderGroup(Article.all);
+};
+
 articleView.show = function(articles) {
-  articleView.loadTemplate(articles);
+  articleView.renderGroup(articles);
 };

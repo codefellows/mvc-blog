@@ -4,20 +4,32 @@ articlesController.index = function() {
   Article.loadAll(articleView.index);
 };
 
+articlesController.template = function(ctx, next) {
+  if (articleView.template) {
+    next();
+  } else {
+    $.get('/templates/article.html', function(data, msg, xhr) {
+      articleView.template = Handlebars.compile(data);
+      next();
+    });
+  }
+};
+
 articlesController.category = function(ctx, next) {
   var categoryData = function(data) {
     ctx.articles = data;
-    next()
+    next();
 
-  }
+  };
+
   Article.findByCategory(ctx.params.category, categoryData );
 };
 
 
 articlesController.author = function(ctx, next) {
   console.log(ctx);
-}
+};
 
 articlesController.show = function(ctx, next) {
   articleView.show(ctx.articles);
-}
+};
