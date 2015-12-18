@@ -24,10 +24,6 @@ articleView.render = function(article) {
   return articleView.template(article);
 };
 
-articleView.index = function() {
-  articleView.renderGroup(Article.all);
-};
-
 articleView.show = function(articles) {
   articleView.renderGroup(articles);
 };

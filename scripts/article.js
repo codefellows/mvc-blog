@@ -58,7 +58,7 @@ Article.requestAll = function(next, callback) {
 };
 
 Article.loadAll = function(callback) {
-  var callback = callback || function() {};
+  callback = callback || function() {};
 
   if (Article.all.length === 0) {
     webDB.execute('SELECT * FROM articles ORDER BY publishedOn;',
@@ -67,9 +67,9 @@ Article.loadAll = function(callback) {
           // Request data from server, then try loading from db again:
           Article.requestAll(Article.loadAll, callback);
         } else {
-          rows.forEach(function(row) {
-            Article.all.push(new Article(row));
-          });
+          Article.all = Article.all.concat(
+            rows.map( function(row) { return new Article(row); } )
+          );
           callback();
         }
       }
@@ -91,17 +91,17 @@ Article.find = function(id, callback) {
   );
 };
 
-Article.findByCategory = function(category, callback) {
+Article.findWhere = function(column, value, callback) {
   webDB.execute(
     [
       {
-        'sql': 'SELECT * FROM articles WHERE category = ?',
-        'data': [category]
+        'sql': 'SELECT * FROM articles WHERE ' + column + '= ?',
+        'data': [value]
       }
     ],
     callback
   );
-}
+};
 
 Article.truncateTable = function(callback) {
   // Delete all records from given table.
