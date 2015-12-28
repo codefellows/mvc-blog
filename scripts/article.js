@@ -7,15 +7,16 @@ function Article (opts) {
 }
 
 Article.prototype.insertRecord = function(callback) {
-  // insert article record into database
+  // Insert author and article records into database
   webDB.execute(
     [
       {
-        'sql': 'INSERT INTO articles (title, author, authorUrl, category, publishedOn, markdown) VALUES (?, ?, ?, ?, ?, ?);',
-        'data': [this.title, this.author, this.authorUrl, this.category, this.publishedOn, this.markdown],
+        sql: 'INSERT INTO articles ' +
+          '(title, authorId, category, publishedOn, markdown) ' +
+          'VALUES (?, ?, ?, ?, ?);',
+        data: [this.title, this.authorId, this.category, this.publishedOn, this.markdown],
       }
-    ],
-    callback
+    ]
   );
 };
 
@@ -24,8 +25,10 @@ Article.prototype.updateRecord = function(callback) {
   webDB.execute(
     [
       {
-        'sql': 'UPDATE articles SET title = ?, author = ?, authorUrl = ?, category = ?, publishedOn = ?, markdown = ? WHERE id = ?;',
-        'data': [this.title, this.author, this.authorUrl, this.category, this.publishedOn, this.markdown, this.id]
+        sql: 'UPDATE articles ' +
+          'SET title = ?, author = ?, authorUrl = ?, category = ?, publishedOn = ?, markdown = ? ' +
+          'WHERE id = ?;',
+        data: [this.title, this.author, this.authorUrl, this.category, this.publishedOn, this.markdown, this.id]
       }
     ],
     callback
@@ -37,8 +40,9 @@ Article.prototype.deleteRecord = function(callback) {
   webDB.execute(
     [
       {
-        'sql': 'DELETE FROM articles WHERE id = ?;',
-        'data': [this.id]
+        sql: 'DELETE FROM articles ' +
+          'WHERE id = ?;',
+        data: [this.id]
       }
     ],
     callback
@@ -47,12 +51,16 @@ Article.prototype.deleteRecord = function(callback) {
 
 Article.all = [];
 
+Article.importRecord = function (article) {
+  var newArticle = new Article(article);
+  var insertNewArticle = Article.prototype.insertRecord.bind(newArticle);
+
+  Author.importRecord(newArticle, insertNewArticle);
+};
+
 Article.requestAll = function(next, callback) {
-  $.getJSON('/scripts/blogArticles.json', function (data) {
-    data.forEach(function(item) {
-      var article = new Article(item);
-      article.insertRecord();
-    });
+  $.getJSON('/data/hackerIpsum.json', function (data) {
+    data.forEach(Article.importRecord);
     next(callback);
   });
 };
@@ -61,7 +69,12 @@ Article.loadAll = function loadAll (callback) {
   callback = callback || function() {};
 
   if (Article.all.length === 0) {
-    webDB.execute('SELECT * FROM articles ORDER BY publishedOn;',
+    webDB.execute(
+      'SELECT articles.id, title, author, authorUrl, category, publishedOn, markdown ' +
+      'FROM articles ' +
+      'JOIN authors ' +
+      'ON articles.authorId = authors.id ' +
+      'ORDER BY publishedOn;',
       function webDBcallback (rows) {
         if (rows.length === 0) {
           // Request data from server, then try loading from db again:
@@ -83,8 +96,8 @@ Article.find = function(id, callback) {
   webDB.execute(
     [
       {
-        'sql': 'SELECT * FROM articles WHERE id = ?',
-        'data': [id]
+        sql: 'SELECT * FROM articles WHERE id = ?',
+        data: [id]
       }
     ],
     callback
@@ -95,8 +108,8 @@ Article.findWhere = function(column, value, callback) {
   webDB.execute(
     [
       {
-        'sql': 'SELECT * FROM articles WHERE ' + column + '= ?',
-        'data': [value]
+        sql: 'SELECT * FROM articles WHERE ' + column + '= ?',
+        data: [value]
       }
     ],
     callback
@@ -105,7 +118,8 @@ Article.findWhere = function(column, value, callback) {
 
 Article.truncateTable = function(callback) {
   // Delete all records from given table.
-  webDB.execute('DELETE FROM articles;',
+  webDB.execute(
+    'DELETE FROM articles;',
     callback
   );
 };
