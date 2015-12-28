@@ -69,7 +69,6 @@ Author.importRecord = function (article, callback) {
 };
 
 Author.getAll = function(callback) {
-  // Retrieve all records from joined authors and articles table.
   webDB.execute(
     'SELECT * FROM authors;',
     callback

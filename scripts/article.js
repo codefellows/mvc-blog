@@ -26,9 +26,9 @@ Article.prototype.updateRecord = function(callback) {
     [
       {
         sql: 'UPDATE articles ' +
-          'SET title = ?, author = ?, authorUrl = ?, category = ?, publishedOn = ?, markdown = ? ' +
+          'SET title = ?, authorId = ?, category = ?, publishedOn = ?, markdown = ? ' +
           'WHERE id = ?;',
-        data: [this.title, this.author, this.authorUrl, this.category, this.publishedOn, this.markdown, this.id]
+        data: [this.title, this.authorId, this.category, this.publishedOn, this.markdown, this.id]
       }
     ],
     callback
@@ -93,6 +93,33 @@ Article.loadAll = function loadAll (callback) {
   } else {
     callback();
   }
+};
+
+Article.findAllJoined = function (callback) {
+  webDB.execute(
+    'SELECT articles.id, title, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+    'FROM articles ' +
+    'JOIN authors ' +
+    'ON articles.authorId = authors.id ' +
+    'ORDER BY publishedOn;',
+    callback
+  );
+};
+
+Article.findJoined = function (id, callback) {
+  webDB.execute(
+    [
+      {
+        sql: 'SELECT articles.id, title, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+          'FROM articles ' +
+          'JOIN authors ' +
+          'ON articles.authorId = authors.id ' +
+          'WHERE articles.id = ?',
+        data: [id]
+      }
+    ],
+    callback
+  );
 };
 
 Article.find = function(id, callback) {
