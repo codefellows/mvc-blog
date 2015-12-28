@@ -70,7 +70,7 @@ Article.loadAll = function loadAll (callback) {
 
   if (Article.all.length === 0) {
     webDB.execute(
-      'SELECT articles.id, title, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+      'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
       'FROM articles ' +
       'JOIN authors ' +
       'ON articles.authorId = authors.id ' +
@@ -97,7 +97,7 @@ Article.loadAll = function loadAll (callback) {
 
 Article.findAllJoined = function (callback) {
   webDB.execute(
-    'SELECT articles.id, title, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+    'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
     'FROM articles ' +
     'JOIN authors ' +
     'ON articles.authorId = authors.id ' +
@@ -110,7 +110,7 @@ Article.findJoined = function (id, callback) {
   webDB.execute(
     [
       {
-        sql: 'SELECT articles.id, title, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
           'FROM articles ' +
           'JOIN authors ' +
           'ON articles.authorId = authors.id ' +
