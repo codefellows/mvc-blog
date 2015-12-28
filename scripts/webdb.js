@@ -49,8 +49,8 @@ webDB.setupTables = function () {
       ');',
       'CREATE TABLE IF NOT EXISTS authors (' +
         'id INTEGER PRIMARY KEY, ' +
-        'author VARCHAR(255) NOT NULL UNIQUE, ' +
-        'authorUrl VARCHAR(255)' +
+        'name VARCHAR(255) NOT NULL UNIQUE, ' +
+        'url VARCHAR(255)' +
       ');'
     ]
   );

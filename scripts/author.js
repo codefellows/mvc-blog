@@ -1,6 +1,6 @@
 function Author (opts) {
-  this.author = opts.author;
-  this.authorUrl = opts.authorUrl;
+  this.name = opts.author;
+  this.url = opts.authorurl;
   this.id = opts.id;
 }
 
@@ -9,9 +9,9 @@ Author.prototype.insertRecord = function (callback) {
     [
       {
         sql: 'INSERT INTO authors ' +
-          '(author, authorUrl) ' +
+          '(name, url) ' +
           'VALUES (?, ?);',
-        data: [this.author, this.authorUrl]
+        data: [this.author, this.url]
       }
     ],
     callback
@@ -23,9 +23,9 @@ Author.prototype.updateRecord = function (callback) {
     [
       {
         sql: 'UPDATE authors ' +
-          'SET author = ?, authorUrl = ? ' +
+          'SET name = ?, url = ? ' +
           'WHERE id = ?;',
-        data: [this.author, this.authorUrl, this.id]
+        data: [this.name, this.url, this.id]
       }
     ],
     callback
@@ -47,20 +47,20 @@ Author.prototype.deleteRecord = function (callback) {
 
 Author.all = [];
 
-Author.importRecord = function (ctx, callback) {
+Author.importRecord = function (article, callback) {
   webDB.execute(
     [
       {
         sql: 'INSERT OR IGNORE INTO authors ' +
-          '(author, authorUrl) ' +
+          '(name, url) ' +
           'VALUES (?, ?);',
-        data: [ctx.author, ctx.authorUrl]
+        data: [article.author, article.authorUrl]
       },
       {
-        sql: 'SELECT id FROM authors WHERE author = ?;',
-        data: [ctx.author],
+        sql: 'SELECT id FROM authors WHERE name = ?;',
+        data: [article.author],
         success: function (tx, results, resultsArray) {
-          ctx.authorId = resultsArray[0].id;
+          article.authorId = resultsArray[0].id;
         }
       }
     ],
