@@ -81,8 +81,11 @@ Article.loadAll = function loadAll (callback) {
           Article.requestAll(Article.loadAll, callback);
         } else {
           Article.all = Article.all.concat(
-            rows.map( function(row) { return new Article(row); } )
+            rows.map(function(row) {return new Article(row);} )
           );
+          Author.getAll(function(rows) {
+            Author.all = rows.map(function(row) {return new Author(row);});
+          });
           callback(Article.all);
         }
       }

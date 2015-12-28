@@ -1,6 +1,6 @@
 function Author (opts) {
-  this.name = opts.author;
-  this.url = opts.authorurl;
+  this.name = opts.name ? opts.name : opts.author;
+  this.url = opts.url ? opts.url : opts.authorUrl;
   this.id = opts.id;
 }
 
@@ -11,7 +11,7 @@ Author.prototype.insertRecord = function (callback) {
         sql: 'INSERT INTO authors ' +
           '(name, url) ' +
           'VALUES (?, ?);',
-        data: [this.author, this.url]
+        data: [this.name, this.url]
       }
     ],
     callback
@@ -74,6 +74,12 @@ Author.getAll = function(callback) {
     'SELECT * FROM authors;',
     callback
   );
+};
+
+Author.updateArray = function () {
+  Author.getAll(function(rows) {
+    Author.all = rows.map(function(row) {return new Author(row);});
+  });
 };
 
 Author.find = function(id, callback) {
