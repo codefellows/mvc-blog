@@ -18,6 +18,10 @@ articlesController.index = function(ctx, next) {
   articleView.show(ctx.articles);
 };
 
+articlesController.edit = function(ctx, next) {
+  articleView.edit(ctx.articles);
+};
+
 articlesController.template = function(ctx, next) {
   if (articleView.template) {
     next();
@@ -46,6 +50,15 @@ articlesController.author = function(ctx, next) {
   };
 
   Article.findJoinedWhere( 'author', ctx.params.author, authorData );
+};
+
+articlesController.article = function(ctx, next) {
+  var articleData = function(data) {
+    ctx.articles = data;
+    next();
+  };
+
+  Article.findJoined(ctx.params.id, articleData);
 };
 
 articlesController.show = function(ctx, next) {

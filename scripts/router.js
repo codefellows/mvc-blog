@@ -17,5 +17,17 @@ page('/author/:author',
   articlesController.show
 );
 
+// Build route for new article
+// page('/article/new',
+//   articlesController.template,
+//   articlesController.new
+// );
+
+page('/article/edit/:id',
+  articlesController.template,
+  articlesController.article,
+  articlesController.edit
+);
+
 page('/about', reposController.index);
 page.start();
