@@ -58,6 +58,20 @@ Article.importRecord = function (article) {
   Author.importRecord(newArticle, insertNewArticle);
 };
 
+Article.importRecords = function (articles, callback) {
+  var sqlObjects = articles.map(
+    function (article) {
+      return {
+        sql: 'INSERT INTO articles ' +
+          '(title, authorId, category, publishedOn, markdown) ' +
+          'VALUES (?, (SELECT id FROM authors WHERE name = ?), ?, ?, ?);',
+        data: [article.title, article.author, article.category, article.publishedOn, article.markdown],
+      };
+    }
+  );
+  webDB.execute(sqlObjects, callback);
+};
+
 Article.requestAll = function(next, callback) {
   $.getJSON('/data/hackerIpsum.json', function (data) {
     data.forEach(Article.importRecord);

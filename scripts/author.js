@@ -68,6 +68,21 @@ Author.importRecord = function (article, callback) {
   );
 };
 
+Author.importRecords = function (articles, callback) {
+  var sqlObjects = articles.map(
+    function (article) {
+      return {
+        sql: 'INSERT OR IGNORE INTO authors ' +
+          '(name, url) ' +
+          'VALUES (?, ?);',
+        data: [article.author, article.authorUrl]
+      };
+    }
+  );
+
+  webDB.execute(sqlObjects, callback);
+};
+
 Author.getAll = function(callback) {
   webDB.execute(
     'SELECT * FROM authors;',
