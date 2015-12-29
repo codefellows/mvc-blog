@@ -2,6 +2,9 @@ var articleView = {};
 
 // renderGroup -> render (one)
 articleView.renderGroup = function(articleList) {
+  if (articleList.length) {
+    $('.placeholder-article').hide();
+  }
 
   $('#articles')
     .fadeIn()
