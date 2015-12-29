@@ -51,13 +51,6 @@ Article.prototype.deleteRecord = function(callback) {
 
 Article.all = [];
 
-Article.importRecord = function (article) {
-  var newArticle = new Article(article);
-  var insertNewArticle = Article.prototype.insertRecord.bind(newArticle);
-
-  Author.importRecord(newArticle, insertNewArticle);
-};
-
 Article.importRecords = function (articles, callback) {
   var sqlObjects = articles.map(
     function (article) {
@@ -98,9 +91,6 @@ Article.loadArticles = function (callback) {
           Article.all = Article.all.concat(
             rows.map(function(row) {return new Article(row);} )
           );
-          // Author.getAll(function(rows) {
-          //   Author.all = rows.map(function(row) {return new Author(row);});
-          // });
           callback(Article.all);
         }
       }
