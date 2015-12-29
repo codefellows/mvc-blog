@@ -21,3 +21,11 @@ Handlebars.registerHelper('if_admin', function (block) {
   }
   return block.inverse(this);
 });
+
+util.isAdmin = function () {
+  var admin = util.getParameterByKey('admin');
+  if (admin === 'true') {
+    return true;
+  }
+  return false;
+};
