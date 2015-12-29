@@ -1,6 +1,20 @@
 var articlesController = {};
 
-articlesController.loadAll = function(ctx, next) {
+articlesController.loadAuthors = function(ctx, next) {
+  var authorData = function(data) {
+    ctx.authors = data;
+    next();
+  };
+
+  if (Author.all.length > 0) {
+    ctx.authors = Author.all;
+    next();
+  } else {
+    Author.loadAuthors(authorData);
+  }
+};
+
+articlesController.loadArticles = function(ctx, next) {
   var articleData = function(data) {
     ctx.articles = data;
     next();
@@ -10,7 +24,7 @@ articlesController.loadAll = function(ctx, next) {
     ctx.articles = Article.all;
     next();
   } else {
-    Article.loadAll(articleData);
+    Article.loadArticles(articleData);
   }
 };
 

@@ -1,6 +1,7 @@
 page('/',
   articlesController.template,
-  articlesController.loadAll,
+  articlesController.loadAuthors,
+  articlesController.loadArticles,
   articlesController.index
 );
 

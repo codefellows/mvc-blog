@@ -47,27 +47,6 @@ Author.prototype.deleteRecord = function (callback) {
 
 Author.all = [];
 
-Author.importRecord = function (article, callback) {
-  webDB.execute(
-    [
-      {
-        sql: 'INSERT OR IGNORE INTO authors ' +
-          '(name, url) ' +
-          'VALUES (?, ?);',
-        data: [article.author, article.authorUrl]
-      },
-      {
-        sql: 'SELECT id FROM authors WHERE name = ?;',
-        data: [article.author],
-        success: function (tx, results, resultsArray) {
-          article.authorId = resultsArray[0].id;
-        }
-      }
-    ],
-    callback
-  );
-};
-
 Author.importRecords = function (articles, callback) {
   var sqlObjects = articles.map(
     function (article) {
@@ -81,6 +60,38 @@ Author.importRecords = function (articles, callback) {
   );
 
   webDB.execute(sqlObjects, callback);
+};
+
+Author.requestAuthors = function(next, callback) {
+  $.getJSON('/data/hackerIpsum.json', function(articles) {
+    Author.importRecords(articles, function() {
+      next(callback);
+    });
+  });
+};
+
+Author.loadAuthors = function (callback) {
+  callback = callback || function() {};
+
+  if (Author.all.length === 0) {
+    webDB.execute(
+      'SELECT * FROM authors;',
+      function webDBcallback (rows) {
+        if (rows.length === 0) {
+          // Request data from server, then try loading from db again:
+          Author.requestAuthors(Author.loadAuthors, callback);
+        } else {
+          // Article.all = Article.all.concat(
+          //   rows.map(function(row) {return new Article(row);} )
+          // );
+          Author.all = rows.map(function(row) {return new Author(row);});
+          callback(Author.all);
+        }
+      }
+    );
+  } else {
+    callback();
+  }
 };
 
 Author.getAll = function(callback) {

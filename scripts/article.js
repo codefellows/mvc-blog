@@ -72,14 +72,15 @@ Article.importRecords = function (articles, callback) {
   webDB.execute(sqlObjects, callback);
 };
 
-Article.requestAll = function(next, callback) {
-  $.getJSON('/data/hackerIpsum.json', function (data) {
-    data.forEach(Article.importRecord);
-    next(callback);
+Article.requestArticles = function(next, callback) {
+  $.getJSON('/data/hackerIpsum.json', function(articles) {
+    Article.importRecords(articles, function() {
+      next(callback);
+    });
   });
 };
 
-Article.loadAll = function loadAll (callback) {
+Article.loadArticles = function (callback) {
   callback = callback || function() {};
 
   if (Article.all.length === 0) {
@@ -92,14 +93,14 @@ Article.loadAll = function loadAll (callback) {
       function webDBcallback (rows) {
         if (rows.length === 0) {
           // Request data from server, then try loading from db again:
-          Article.requestAll(Article.loadAll, callback);
+          Article.requestArticles(Article.loadArticles, callback);
         } else {
           Article.all = Article.all.concat(
             rows.map(function(row) {return new Article(row);} )
           );
-          Author.getAll(function(rows) {
-            Author.all = rows.map(function(row) {return new Author(row);});
-          });
+          // Author.getAll(function(rows) {
+          //   Author.all = rows.map(function(row) {return new Author(row);});
+          // });
           callback(Article.all);
         }
       }
