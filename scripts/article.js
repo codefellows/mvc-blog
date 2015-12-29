@@ -127,6 +127,22 @@ Article.findJoined = function (id, callback) {
   );
 };
 
+Article.findJoinedWhere = function (column, value, callback) {
+  webDB.execute(
+    [
+      {
+        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+          'FROM articles ' +
+          'JOIN authors ' +
+          'ON articles.authorId = authors.id ' +
+          'WHERE ' + column + ' = ?',
+        data: [value]
+      }
+    ],
+    callback
+  );
+};
+
 Article.find = function(id, callback) {
   webDB.execute(
     [
