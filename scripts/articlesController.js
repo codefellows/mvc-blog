@@ -1,6 +1,6 @@
 var articlesController = {};
 
-articlesController.loadAll = function(ctx, next) {
+articlesController.loadArticles = function(ctx, next) {
   var articleData = function(data) {
     ctx.articles = data;
     next();
@@ -10,7 +10,7 @@ articlesController.loadAll = function(ctx, next) {
     ctx.articles = Article.all;
     next();
   } else {
-    Article.loadAll(articleData);
+    Article.loadArticles(articleData);
   }
 };
 
@@ -35,7 +35,7 @@ articlesController.category = function(ctx, next) {
     next();
   };
 
-  Article.findWhere('category', ctx.params.category, categoryData );
+  Article.findJoinedWhere('category', ctx.params.category, categoryData );
 };
 
 
@@ -45,7 +45,7 @@ articlesController.author = function(ctx, next) {
     next();
   };
 
-  Article.findWhere( 'author', ctx.params.author, authorData );
+  Article.findJoinedWhere( 'author', ctx.params.author, authorData );
 };
 
 articlesController.show = function(ctx, next) {

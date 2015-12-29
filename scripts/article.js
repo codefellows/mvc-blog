@@ -51,21 +51,29 @@ Article.prototype.deleteRecord = function(callback) {
 
 Article.all = [];
 
-Article.importRecord = function (article) {
-  var newArticle = new Article(article);
-  var insertNewArticle = Article.prototype.insertRecord.bind(newArticle);
-
-  Author.importRecord(newArticle, insertNewArticle);
+Article.importRecords = function (articles, callback) {
+  var sqlObjects = articles.map(
+    function (article) {
+      return {
+        sql: 'INSERT INTO articles ' +
+          '(title, authorId, category, publishedOn, markdown) ' +
+          'VALUES (?, (SELECT id FROM authors WHERE name = ?), ?, ?, ?);',
+        data: [article.title, article.author, article.category, article.publishedOn, article.markdown],
+      };
+    }
+  );
+  webDB.execute(sqlObjects, callback);
 };
 
-Article.requestAll = function(next, callback) {
-  $.getJSON('/data/hackerIpsum.json', function (data) {
-    data.forEach(Article.importRecord);
-    next(callback);
+Article.requestArticles = function(next, callback) {
+  $.getJSON('/data/hackerIpsum.json', function(articles) {
+    Article.importRecords(articles, function() {
+      next(callback);
+    });
   });
 };
 
-Article.loadAll = function loadAll (callback) {
+Article.loadArticles = function (callback) {
   callback = callback || function() {};
 
   if (Article.all.length === 0) {
@@ -78,14 +86,11 @@ Article.loadAll = function loadAll (callback) {
       function webDBcallback (rows) {
         if (rows.length === 0) {
           // Request data from server, then try loading from db again:
-          Article.requestAll(Article.loadAll, callback);
+          Article.requestArticles(Article.loadArticles, callback);
         } else {
           Article.all = Article.all.concat(
             rows.map(function(row) {return new Article(row);} )
           );
-          Author.getAll(function(rows) {
-            Author.all = rows.map(function(row) {return new Author(row);});
-          });
           callback(Article.all);
         }
       }
@@ -116,6 +121,22 @@ Article.findJoined = function (id, callback) {
           'ON articles.authorId = authors.id ' +
           'WHERE articles.id = ?',
         data: [id]
+      }
+    ],
+    callback
+  );
+};
+
+Article.findJoinedWhere = function (column, value, callback) {
+  webDB.execute(
+    [
+      {
+        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+          'FROM articles ' +
+          'JOIN authors ' +
+          'ON articles.authorId = authors.id ' +
+          'WHERE ' + column + ' = ?',
+        data: [value]
       }
     ],
     callback
