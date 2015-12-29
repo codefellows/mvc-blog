@@ -29,4 +29,15 @@ articleView.render = function(article) {
 
 articleView.show = function(articles) {
   articleView.renderGroup(articles);
+  articleView.setTeasers();
+};
+
+articleView.setTeasers = function() {
+  $('.article-body').children(':nth-child(n+3)').hide();
+  $('#articles').on('click', 'a.read-on', function(e) {
+    e.preventDefault();
+    $(this).parent().find('.edit-btn').show();
+    $(this).prev('.article-body').children().show();
+    $(this).hide();
+  });
 };
