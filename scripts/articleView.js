@@ -33,10 +33,16 @@ articleView.show = function(articles) {
   articleView.setTeasers();
 };
 
-articleView.edit = function (articles) {
+articleView.new = function (ctx) {
   $('#editor').show();
   $('#article-export').show();
   articleView.watchNewForm();
+};
+
+articleView.edit = function (articles) {
+  $('#add-article-btn').hide();
+  $('#update-article-btn').show();
+  $('#delete-article-btn').show();
   articleView.fillFormWithArticle(articles);
   articleView.buildPreview(); // Show initial preview
 };

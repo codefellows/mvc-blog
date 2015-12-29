@@ -18,7 +18,12 @@ articlesController.index = function(ctx, next) {
   articleView.show(ctx.articles);
 };
 
+articlesController.new = function(ctx, next) {
+  articleView.new(ctx);
+};
+
 articlesController.edit = function(ctx, next) {
+  articleView.new(ctx);
   articleView.edit(ctx.articles);
 };
 
