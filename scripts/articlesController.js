@@ -19,12 +19,12 @@ articlesController.index = function(ctx, next) {
 };
 
 articlesController.new = function(ctx, next) {
-  articleView.new(ctx);
+  editorView.new(ctx);
 };
 
 articlesController.edit = function(ctx, next) {
-  articleView.new(ctx);
-  articleView.edit(ctx.articles);
+  editorView.new(ctx);
+  editorView.edit(ctx.articles);
 };
 
 articlesController.template = function(ctx, next) {
