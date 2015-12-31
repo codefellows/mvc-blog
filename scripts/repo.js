@@ -8,7 +8,7 @@ repos.requestRepos = function(callback) {
           '?per_page=100' +
           '&sort=updated',
     type: 'GET',
-    headers: { 'Authorization': 'token ' + githubToken },
+    // headers: { 'Authorization': 'token ' + githubToken },
     success: function(data, message, xhr) {
       repos.all = data;
     }
