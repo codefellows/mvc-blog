@@ -23,7 +23,6 @@ webDB.init = function() {
     if (openDatabase) {
       webDB.verbose(true);
       webDB.connect('blogDB', 'Blog Database', 5*1024*1024);
-      webDB.setupTables();
     } else {
       console.log('Web Databases not supported.');
     }
@@ -34,26 +33,6 @@ webDB.init = function() {
 
 webDB.connect = function (database, title, size) {
   html5sql.openDatabase(database, title, size);
-};
-
-webDB.setupTables = function () {
-  webDB.execute(
-    [
-      'CREATE TABLE IF NOT EXISTS articles (' +
-        'id INTEGER PRIMARY KEY, ' +
-        'title VARCHAR(255) NOT NULL, ' +
-        'authorId INTEGER NOT NULL REFERENCES authors(id), ' +
-        'category VARCHAR(20), ' +
-        'publishedOn DATETIME, ' +
-        'markdown TEXT NOT NULL' +
-      ');',
-      'CREATE TABLE IF NOT EXISTS authors (' +
-        'id INTEGER PRIMARY KEY, ' +
-        'name VARCHAR(255) NOT NULL UNIQUE, ' +
-        'url VARCHAR(255)' +
-      ');'
-    ]
-  );
 };
 
 webDB.execute = function (sql, callback) {

@@ -6,6 +6,22 @@ function Article (opts) {
   this.body = opts.body || marked(this.markdown);
 }
 
+Article.setupTable = function (callback) {
+  webDB.execute(
+    'CREATE TABLE IF NOT EXISTS articles (' +
+      'id INTEGER PRIMARY KEY, ' +
+      'title VARCHAR(255) NOT NULL, ' +
+      'authorId INTEGER NOT NULL REFERENCES authors(id), ' +
+      'category VARCHAR(20), ' +
+      'publishedOn DATETIME, ' +
+      'markdown TEXT NOT NULL' +
+    ');',
+    callback
+  );
+};
+
+Article.setupTable();
+
 Article.prototype.insertRecord = function(callback) {
   // Insert author and article records into database
   webDB.execute(

@@ -4,6 +4,19 @@ function Author (opts) {
   this.id = opts.id;
 }
 
+Author.setupTable = function (callback) {
+  webDB.execute(
+    'CREATE TABLE IF NOT EXISTS authors (' +
+      'id INTEGER PRIMARY KEY, ' +
+      'name VARCHAR(255) NOT NULL UNIQUE, ' +
+      'url VARCHAR(255)' +
+    ');',
+    callback
+  );
+};
+
+Author.setupTable();
+
 Author.prototype.insertRecord = function (callback) {
   webDB.execute(
     [
