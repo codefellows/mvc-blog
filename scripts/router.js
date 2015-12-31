@@ -24,6 +24,8 @@ page('/article/new',
 
 page('/article/edit/:id',
   articlesController.template,
+  authorsController.loadAuthors,
+  articlesController.loadArticles,
   articlesController.article,
   articlesController.edit
 );
