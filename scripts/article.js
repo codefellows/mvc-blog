@@ -32,7 +32,8 @@ Article.prototype.insertRecord = function(callback) {
           'VALUES (?, ?, ?, ?, ?);',
         data: [this.title, this.authorId, this.categoryId, this.publishedOn, this.markdown],
       }
-    ]
+    ],
+    callback
   );
 };
 

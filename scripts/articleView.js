@@ -30,7 +30,14 @@ articleView.render = function(article) {
 
 articleView.show = function(articles) {
   articleView.renderGroup(articles);
+  articleView.highlight();
   articleView.setTeasers();
+};
+
+articleView.highlight = function () {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
 };
 
 articleView.setTeasers = function() {
