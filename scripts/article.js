@@ -13,8 +13,9 @@ Article.setupTable = function (callback) {
       'title VARCHAR(255) NOT NULL, ' +
       'authorId INTEGER NOT NULL REFERENCES authors(id), ' +
       'categoryId INTEGER NOT NULL REFERENCES categories(id), ' +
+      'markdown TEXT NOT NULL, ' +
       'publishedOn DATETIME, ' +
-      'markdown TEXT NOT NULL' +
+      'modifiedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL' +
     ');',
     callback
   );
@@ -28,9 +29,9 @@ Article.prototype.insertRecord = function(callback) {
     [
       {
         sql: 'INSERT INTO articles ' +
-          '(title, authorId, categoryId, publishedOn, markdown) ' +
-          'VALUES (?, ?, ?, ?, ?);',
-        data: [this.title, this.authorId, this.categoryId, this.publishedOn, this.markdown],
+          '(title, authorId, categoryId, markdown, publishedOn) ' +
+          'VALUES (?, ?, ?, ?, ?, datetime("now"));',
+        data: [this.title, this.authorId, this.categoryId, this.markdown, this.publishedOn],
       }
     ],
     callback
@@ -43,9 +44,9 @@ Article.prototype.updateRecord = function(callback) {
     [
       {
         sql: 'UPDATE articles ' +
-          'SET title = ?, authorId = ?, categoryId = ?, publishedOn = ?, markdown = ? ' +
+          'SET title = ?, authorId = ?, categoryId = ?, markdown = ?, publishedOn = ?, modifiedOn = datetime("now") ' +
           'WHERE id = ?;',
-        data: [this.title, this.authorId, this.categoryId, this.publishedOn, this.markdown, this.id]
+        data: [this.title, this.authorId, this.categoryId, this.markdown, this.publishedOn, this.id]
       }
     ],
     callback
@@ -95,7 +96,7 @@ Article.loadArticles = function (callback) {
 
   if (Article.all.length === 0) {
     webDB.execute(
-      'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, publishedOn, markdown ' +
+      'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, markdown, publishedOn, modifiedOn ' +
       'FROM articles ' +
       'INNER JOIN authors ' +
         'ON articles.authorId = authors.id ' +
@@ -121,7 +122,7 @@ Article.loadArticles = function (callback) {
 
 Article.findAllJoined = function (callback) {
   webDB.execute(
-    'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, publishedOn, markdown ' +
+    'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, markdown, publishedOn, modifiedOn ' +
     'FROM articles ' +
     'INNER JOIN authors ' +
       'ON articles.authorId = authors.id ' +
@@ -136,7 +137,7 @@ Article.findJoined = function (id, callback) {
   webDB.execute(
     [
       {
-        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, publishedOn, markdown ' +
+        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, markdown, publishedOn, modifiedOn ' +
           'FROM articles ' +
           'INNER JOIN authors ' +
             'ON articles.authorId = authors.id ' +
@@ -154,7 +155,7 @@ Article.findJoinedWhere = function (column, value, callback) {
   webDB.execute(
     [
       {
-        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, publishedOn, markdown ' +
+        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, markdown, publishedOn, modifiedOn ' +
           'FROM articles ' +
           'INNER JOIN authors ' +
             'ON articles.authorId = authors.id ' +
