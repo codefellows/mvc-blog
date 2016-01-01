@@ -3,6 +3,10 @@ var editorView = {};
 editorView.new = function (ctx) {
   $('#editor').show();
   $('#article-export').show();
+  editorView.populateAuthors(ctx.authors);
+  editorView.populateCategories(ctx.categories);
+  editorView.handleAuthorDropdown();
+  editorView.handleCategoryDropdown();
   editorView.watchNewForm();
 };
 
@@ -19,15 +23,17 @@ editorView.fillFormWithArticle = function (articles) {
   var checked = article.publishedOn ? true : false;
   $('#articles').empty();
   $('#article-title').val(article.title);
-  $('#article-author').val(article.author); // Need to adjust for join
-  $('#article-author-url').val(article.authorUrl); // Need to adjust for join
+  $('#article-author-list').val(article.authorId);
+  $('#article-author').val(article.author);
+  $('#article-author-url').val(article.authorUrl);
+  $('#article-category-list').val(article.categoryId);
   $('#article-category').val(article.category);
   $('#article-body').val(article.markdown);
   $('#article-published').attr('checked', checked);
 };
 
 editorView.watchNewForm = function() {
-  $('#article-form').change(editorView.buildPreview); // Only firing once.
+  $('#article-form').change(editorView.buildPreview);
 };
 
 editorView.buildPreview = function() {
@@ -44,10 +50,63 @@ editorView.buildPreview = function() {
 editorView.buildArticle = function() {
   return new Article({
     title: $('#article-title').val(),
-    author: $('#article-author').val(), // Need to adjust for join
-    authorUrl: $('#article-author-url').val(), // Need to adjust for join
+    authorId: $('#article-author-list').val(),
+    author: $('#article-author').val(),
+    authorUrl: $('#article-author-url').val(),
+    categoryId: $('#article-category-list').val(),
     category: $('#article-category').val(),
     markdown: $('#article-body').val(),
     publishedOn: $('#article-published:checked').length ? util.today() : null
+  });
+};
+
+editorView.populateAuthors = function(authors) {
+  var authorOptions = authors.map(function (author) {
+    return $('<option value="' + author.id + '">' + author.name + '</option>');
+  });
+  $('#article-author-list').children(':nth-child(n+2)').remove();
+  $('#article-author-list').append(authorOptions);
+};
+
+editorView.populateCategories = function(categories) {
+  var categoryOptions = categories.map(function (category) {
+    return $('<option value="' + category.id + '">' + category.name + '</option>');
+  });
+  $('#article-category-list').children(':nth-child(n+2)').remove();
+  $('#article-category-list').append(categoryOptions);
+};
+
+editorView.handleAuthorDropdown = function () {
+  var $authorDropdown = $('#article-author-list');
+  var $authorField = $('#article-author');
+  var $authorUrlField = $('#article-author-url');
+
+  $authorDropdown.on('change', function() {
+    if ($authorDropdown.val()) {
+      Author.find($authorDropdown.val(), function (authors) {
+        $authorField.val(authors[0].name);
+        $authorUrlField.val(authors[0].url);
+        editorView.buildPreview();
+      });
+    } else {
+      $authorField.val('');
+      $authorUrlField.val('');
+    }
+  });
+};
+
+editorView.handleCategoryDropdown = function () {
+  var $categoryDropdown = $('#article-author-list');
+  var $categoryField = $('#article-category');
+
+  $categoryDropdown.on('change', function() {
+    if ($categoryDropdown.val()) {
+      Category.find($categoryDropdown.val(), function (categories) {
+        $categoryField.val(categories[0].name);
+        editorView.buildPreview();
+      });
+    } else {
+      $categoryField.val('');
+    }
   });
 };

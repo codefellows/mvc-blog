@@ -52,16 +52,24 @@
           <label>
             <input type="text" id="article-title" placeholder="Article title" required>
           </label>
+          <select id="article-author-list">
+            <option value="">-- Select Author --</option>
+          </select>
+          <button type="button" id="add-author" title="Add a new author">+</button>
+          <label>
+            <input type="text" id="article-author" class="hidden" placeholder="Author Name" disabled required>
+          </label>
+          <label>
+            <input type="text" id="article-author-url" class="hidden" placeholder="Author's URL" disabled required>
+          </label>
+          <select id="article-category-list">
+            <option value="">-- Select Category --</option>
+          </select>
+          <button type="button" id="add-author" title="Add a new category">+</button>
+          <label>
+            <input type="text" id="article-category" class="hidden" placeholder="Category" disabled required>
+          </label>
           <textarea id="article-body" rows="8" cols="40" required></textarea>
-          <label>
-            <input type="text" id="article-author" placeholder="Author Name" required>
-          </label>
-          <label>
-            <input type="text" id="article-author-url" placeholder="Author's URL" required>
-          </label>
-          <label>
-            <input type="text" id="article-category" placeholder="Category" required>
-          </label>
           <label>
             <input type="checkbox" id="article-published"> Published
           </label>
@@ -69,9 +77,9 @@
       </section>
 
       <section id="article-export" class="tab-content">
-        <button id="add-article-btn" class="pull-left">Add to Database</button>
-        <button id="update-article-btn" class="pull-left" style="display: none;">Update Article</button>
-        <button id="delete-article-btn" class="pull-left" style="display: none;">Delete Article</button>
+        <button id="add-article-btn">Add to Database</button>
+        <button id="update-article-btn" style="display: none;">Update Article</button>
+        <button id="delete-article-btn" style="display: none;">Delete Article</button>
         <label id="export-field" for="article-json" class="pull-right">
           <textarea readonly id="article-json"></textarea>
           When finalized, copy the above JSON, and paste into blogArticles.js
@@ -104,6 +112,7 @@
     <!-- APP CODE: -->
     <!-- Model: -->
     <script src="/scripts/author.js"></script>
+    <script src="/scripts/category.js"></script>
     <script src="/scripts/article.js"></script>
     <script src="/scripts/repo.js"></script>
 
@@ -114,6 +123,7 @@
 
     <!-- Controller? -->
     <script src="/scripts/authorsController.js"></script>
+    <script src="/scripts/categoriesController.js"></script>
     <script src="/scripts/articlesController.js"></script>
     <script src="/scripts/reposController.js"></script>
 

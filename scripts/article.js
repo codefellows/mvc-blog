@@ -12,7 +12,7 @@ Article.setupTable = function (callback) {
       'id INTEGER PRIMARY KEY, ' +
       'title VARCHAR(255) NOT NULL, ' +
       'authorId INTEGER NOT NULL REFERENCES authors(id), ' +
-      'category VARCHAR(20), ' +
+      'categoryId INTEGER NOT NULL REFERENCES categories(id), ' +
       'publishedOn DATETIME, ' +
       'markdown TEXT NOT NULL' +
     ');',
@@ -72,8 +72,8 @@ Article.importRecords = function (articles, callback) {
     function (article) {
       return {
         sql: 'INSERT INTO articles ' +
-          '(title, authorId, category, publishedOn, markdown) ' +
-          'VALUES (?, (SELECT id FROM authors WHERE name = ?), ?, ?, ?);',
+          '(title, authorId, categoryId, publishedOn, markdown) ' +
+          'VALUES (?, (SELECT id FROM authors WHERE name = ?), (SELECT id FROM categories WHERE name = ?), ?, ?);',
         data: [article.title, article.author, article.category, article.publishedOn, article.markdown],
       };
     }
@@ -94,10 +94,12 @@ Article.loadArticles = function (callback) {
 
   if (Article.all.length === 0) {
     webDB.execute(
-      'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+      'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, publishedOn, markdown ' +
       'FROM articles ' +
-      'JOIN authors ' +
-      'ON articles.authorId = authors.id ' +
+      'INNER JOIN authors ' +
+        'ON articles.authorId = authors.id ' +
+      'INNER JOIN categories ' +
+        'ON articles.categoryId = categories.id ' +
       'ORDER BY publishedOn;',
       function webDBcallback (rows) {
         if (rows.length === 0) {
@@ -118,10 +120,12 @@ Article.loadArticles = function (callback) {
 
 Article.findAllJoined = function (callback) {
   webDB.execute(
-    'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+    'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, publishedOn, markdown ' +
     'FROM articles ' +
-    'JOIN authors ' +
-    'ON articles.authorId = authors.id ' +
+    'INNER JOIN authors ' +
+      'ON articles.authorId = authors.id ' +
+    'INNER JOIN categories ' +
+      'ON articles.categoryId = categories.id ' +
     'ORDER BY publishedOn;',
     callback
   );
@@ -131,10 +135,12 @@ Article.findJoined = function (id, callback) {
   webDB.execute(
     [
       {
-        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, publishedOn, markdown ' +
           'FROM articles ' +
-          'JOIN authors ' +
-          'ON articles.authorId = authors.id ' +
+          'INNER JOIN authors ' +
+            'ON articles.authorId = authors.id ' +
+          'INNER JOIN categories ' +
+            'ON articles.categoryId = categories.id ' +
           'WHERE articles.id = ?',
         data: [id]
       }
@@ -147,10 +153,12 @@ Article.findJoinedWhere = function (column, value, callback) {
   webDB.execute(
     [
       {
-        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, category, publishedOn, markdown ' +
+        sql: 'SELECT articles.id, title, authors.id AS authorId, authors.name AS author, authors.url AS authorUrl, categories.id AS categoryId, categories.name AS category, publishedOn, markdown ' +
           'FROM articles ' +
-          'JOIN authors ' +
-          'ON articles.authorId = authors.id ' +
+          'INNER JOIN authors ' +
+            'ON articles.authorId = authors.id ' +
+          'INNER JOIN categories ' +
+            'ON articles.categoryId = categories.id ' +
           'WHERE ' + column + ' = ?',
         data: [value]
       }
@@ -184,7 +192,6 @@ Article.findWhere = function(column, value, callback) {
 };
 
 Article.truncateTable = function(callback) {
-  // Delete all records from given table.
   webDB.execute(
     'DELETE FROM articles;',
     callback

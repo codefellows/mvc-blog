@@ -12,6 +12,10 @@
   clear: both;
 }
 
+.hidden {
+  display: none;
+}
+
 img {
   max-width: 100%;
 }
