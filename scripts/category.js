@@ -92,9 +92,6 @@ Category.loadCategories = function (callback) {
           // Request data from server, then try loading from db again:
           Category.requestCategories(Category.loadCategories, callback);
         } else {
-          // Article.all = Article.all.concat(
-          //   rows.map(function(row) {return new Article(row);} )
-          // );
           Category.all = rows.map(function(row) {return new Category(row);});
           callback(Category.all);
         }

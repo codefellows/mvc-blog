@@ -94,9 +94,6 @@ Author.loadAuthors = function (callback) {
           // Request data from server, then try loading from db again:
           Author.requestAuthors(Author.loadAuthors, callback);
         } else {
-          // Article.all = Article.all.concat(
-          //   rows.map(function(row) {return new Article(row);} )
-          // );
           Author.all = rows.map(function(row) {return new Author(row);});
           callback(Author.all);
         }
