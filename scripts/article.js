@@ -28,9 +28,9 @@ Article.prototype.insertRecord = function(callback) {
     [
       {
         sql: 'INSERT INTO articles ' +
-          '(title, authorId, category, publishedOn, markdown) ' +
+          '(title, authorId, categoryId, publishedOn, markdown) ' +
           'VALUES (?, ?, ?, ?, ?);',
-        data: [this.title, this.authorId, this.category, this.publishedOn, this.markdown],
+        data: [this.title, this.authorId, this.categoryId, this.publishedOn, this.markdown],
       }
     ]
   );
@@ -42,9 +42,9 @@ Article.prototype.updateRecord = function(callback) {
     [
       {
         sql: 'UPDATE articles ' +
-          'SET title = ?, authorId = ?, category = ?, publishedOn = ?, markdown = ? ' +
+          'SET title = ?, authorId = ?, categoryId = ?, publishedOn = ?, markdown = ? ' +
           'WHERE id = ?;',
-        data: [this.title, this.authorId, this.category, this.publishedOn, this.markdown, this.id]
+        data: [this.title, this.authorId, this.categoryId, this.publishedOn, this.markdown, this.id]
       }
     ],
     callback
