@@ -100,7 +100,7 @@ Article.loadArticles = function (callback) {
         'ON articles.authorId = authors.id ' +
       'INNER JOIN categories ' +
         'ON articles.categoryId = categories.id ' +
-      'ORDER BY publishedOn;',
+      'ORDER BY publishedOn DESC;',
       function webDBcallback (rows) {
         if (rows.length === 0) {
           // Request data from server, then try loading from db again:
@@ -126,7 +126,7 @@ Article.findAllJoined = function (callback) {
       'ON articles.authorId = authors.id ' +
     'INNER JOIN categories ' +
       'ON articles.categoryId = categories.id ' +
-    'ORDER BY publishedOn;',
+    'ORDER BY publishedOn DESC;',
     callback
   );
 };
@@ -159,7 +159,8 @@ Article.findJoinedWhere = function (column, value, callback) {
             'ON articles.authorId = authors.id ' +
           'INNER JOIN categories ' +
             'ON articles.categoryId = categories.id ' +
-          'WHERE ' + column + ' = ?',
+          'WHERE ' + column + ' = ? ' +
+          'ORDER BY publishedOn DESC;',
         data: [value]
       }
     ],

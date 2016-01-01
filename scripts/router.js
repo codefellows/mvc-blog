@@ -8,12 +8,16 @@ page('/',
 
 page('/category/:category',
   articlesController.template,
+  authorsController.loadAuthors,
+  categoriesController.loadCategories,
   articlesController.category,
   articlesController.show
 );
 
 page('/author/:author',
   articlesController.template,
+  authorsController.loadAuthors,
+  categoriesController.loadCategories,
   articlesController.author,
   articlesController.show
 );
