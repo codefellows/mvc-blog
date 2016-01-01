@@ -7,6 +7,7 @@ editorView.new = function (ctx) {
   editorView.populateCategories(ctx.categories);
   editorView.handleAuthorDropdown();
   editorView.handleCategoryDropdown();
+  editorView.handleAddButton();
   editorView.watchNewForm();
 };
 
@@ -14,6 +15,8 @@ editorView.edit = function (articles) {
   $('#add-article-btn').hide();
   $('#update-article-btn').show();
   $('#delete-article-btn').show();
+  editorView.handleUpdateButton(articles);
+  editorView.handleDeleteButton(articles);
   editorView.fillFormWithArticle(articles);
   editorView.buildPreview(); // Show initial preview
 };
@@ -108,5 +111,40 @@ editorView.handleCategoryDropdown = function () {
     } else {
       $categoryField.val('');
     }
+  });
+};
+
+editorView.handleAddButton = function () {
+  $('#add-article-btn').on('click', function (e) {
+    var navigateHome = function () {
+      window.location.assign('/');
+    };
+
+    var article = editorView.buildArticle();
+    article.insertRecord(navigateHome);
+  });
+};
+
+editorView.handleUpdateButton = function (articles) {
+  $('#update-article-btn').on('click', function () {
+    var navigateHome = function () {
+      window.location.assign('/');
+    };
+
+    var article = editorView.buildArticle();
+    article.id = articles[0].id;
+    article.updateRecord(navigateHome);
+  });
+};
+
+editorView.handleDeleteButton = function (articles) {
+  $('#delete-article-btn').on('click', function () {
+    var navigateHome = function () {
+      window.location.assign('/');
+    };
+
+    var article = editorView.buildArticle();
+    article.id = articles[0].id;
+    article.deleteRecord(navigateHome);
   });
 };
