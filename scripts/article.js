@@ -29,7 +29,7 @@ Article.prototype.insertRecord = function(callback) {
     [
       {
         sql: 'INSERT INTO articles ' +
-          '(title, authorId, categoryId, markdown, publishedOn) ' +
+          '(title, authorId, categoryId, markdown, publishedOn, modifiedOn) ' +
           'VALUES (?, ?, ?, ?, ?, datetime("now"));',
         data: [this.title, this.authorId, this.categoryId, this.markdown, this.publishedOn],
       }
