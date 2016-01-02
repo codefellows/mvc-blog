@@ -1,4 +1,4 @@
-rawData = [
+var rawData = [
   {
     title:       'Bacon Ipsum',
     category:    'food',
