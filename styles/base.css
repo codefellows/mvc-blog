@@ -1,17 +1,51 @@
 body {
-  padding: 1em;
+  line-height: 1.5;
+  font-size: 100%;
+  color: #313131;
 }
 
-main {
-  margin: auto;
+hr {
+  margin: 1em;
   width: 80%;
+}
+
+/*TEXT STYLES
+=======================================*/
+p {
+  font-size: 1em;
 }
 
 address {
   display: inline-block;
 }
 
-hr {
-  margin: 1em;
-  width: 80%;
+/*LINK STYLES
+=======================================*/
+
+a,
+a:link {
+  color: #4078c0;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+/*INPUT STYLES
+=======================================*/
+
+input {
+  border-radius: 0;
+}
+
+select {
+  background-color: #ccc;
+  border-radius: 0;
+}
+
+menu {
+  margin: 0;
+  padding: 0;
 }
