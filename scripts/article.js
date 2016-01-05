@@ -1,10 +1,6 @@
 var articles = [];
 
 function Article (opts) {
-  // shortcut to show off if requested - show on a later date
-  // Object.keys(opts).forEach(function(e, index, keys) {
-  //   this[e] = opts[e];
-  // },this);
   this.author = opts.author;
   this.authorUrl = opts.authorUrl;
   this.title = opts.title;
@@ -20,7 +16,7 @@ Article.prototype.toHtml = function() {
     $newArticle.addClass('draft');
   }
   $newArticle.attr('data-category', this.category);
-  // TODO: Use jQuery to also add the author name as a data-attribute of the newly cloned article. 
+  // TODO: Use jQuery to also add the author name as a data-attribute of the newly cloned article.
   //       Doing so will allow us to use selectors to target articles, based on who wrote them.
   $newArticle.attr('data-author', this.author)
 
