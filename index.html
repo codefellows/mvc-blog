@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="styles/modules.css">
   </head>
   <body>
-    <header>
+    <header class="site-header">
       <h1>
         Kilovolt Blog!
       </h1>
       <p>The shocking power of static pages</p>
     </header>
-    <nav>
+    <nav class="main-nav">
       <ul>
-        <!-- TODO: Use an icon for each of these nav items... -->
+        <!-- TODO: Use one of the icons from the available set for each of these nav items... -->
         <li class="tab" data-content="articles"><a href="#" class="icon-home"> Home</a></li>
         <li class="tab" data-content="about"><a href="#" class="icon-address-book"> About</a></li>
         <li><a href="http://twitter.com/brookr" target="_blank" class="icon-twitter3"> Twitter</a></li>
@@ -40,7 +40,7 @@
             </li>
           </ul>
         </div>
-        <article class="template draft" data-category="cat">
+        <article class="template template" data-category="cat">
           <header>
             <h1>Title</h1>
             <div class="byline">
@@ -73,5 +73,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="scripts/blogArticles.js"></script>
     <script src="scripts/article.js"></script>
+    <!-- TODO: Link up the new js file that will manage the article "View". -->
+    <script src="scripts/articleView.js"></script>
   </body>
 </html>
