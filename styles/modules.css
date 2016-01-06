@@ -41,11 +41,6 @@
   list-style: none;
 }
 
-#filters select {
-  width: 100%;
-  margin: .2em 0;
-}
-
 .template {
   display: none;
 }
@@ -61,18 +56,12 @@
 
 /* TODO: Now add styles for how things should look on a larger screen:
          - Hide the hamburger.
-         - Let the header take up a little more room (and it doesn't need to float).
          - Main should be all on one row, with padding spaced better for a larger screen.
          - Just, ya know, try to make it look good! */
 /* @media only screen... */
 @media only screen and (min-width: 640px) {
   .icon-menu {
     display: none;
-  }
-
-  .heading-group-h1 {
-    padding: .1em .1em .1em 2em;
-    float: none;
   }
 
   .main-nav {
