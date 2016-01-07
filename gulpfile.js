@@ -7,6 +7,7 @@ var concat       = require('gulp-concat');
 var uglify       = require('gulp-uglify');
 var imagemin     = require('gulp-imagemin');
 var cache        = require('gulp-cache');
+var minifycss = require('gulp-minify-css');
 
 gulp.task('clean', function(cb) {
   del(['dist/'], cb);
@@ -32,6 +33,7 @@ gulp.task('images', function(){
 gulp.task('styles', function(){
   gulp.src('styles/**/*')
     .pipe(autoprefixer('last 2 versions'))
+    .pipe(minifycss())
     .pipe(gulp.dest('dist/styles/'));
 });
 
@@ -42,7 +44,7 @@ gulp.task('scripts', function(){
         console.log(error.message);
         this.emit('end');
     }}))
-    .pipe(rename({suffix: '.min'}))
+//    .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
     .pipe(gulp.dest('dist/scripts/'));
 });
