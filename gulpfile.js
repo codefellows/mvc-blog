@@ -25,7 +25,11 @@ gulp.task('copy:vendor', function() {
    gulp.src('vendor/**/*').pipe(gulp.dest('dist/vendor'));
 });
 
-gulp.task('copy',['copy:html', 'copy:vendor']);
+gulp.task('copy:fonts', function() {
+   gulp.src('styles/fonts/**/*').pipe(gulp.dest('dist/styles/fonts/'));
+});
+
+gulp.task('copy',['copy:html', 'copy:vendor', 'copy:fonts']);
 
 gulp.task('images', function(){
   gulp.src('images/**/*')
@@ -34,7 +38,7 @@ gulp.task('images', function(){
 });
 
 gulp.task('styles', function(){
-  gulp.src('styles/**/*')
+  gulp.src('styles/**/*.css')
     .pipe(autoprefixer('last 2 versions'))
     .pipe(minifycss())
     .pipe(gulp.dest('dist/styles/'));
