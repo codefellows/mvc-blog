@@ -52,6 +52,12 @@
   text-decoration: none;
 }
 
+#article-export label {
+  font-size: .8em;
+  font-style: italic;
+  color: #ccc;
+}
+
 @media only screen and (min-width: 640px) {
   .icon-menu {
     display: none;
