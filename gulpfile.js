@@ -1,0 +1,54 @@
+var gulp         = require('gulp');
+var plumber      = require('gulp-plumber');
+var rename       = require('gulp-rename');
+var del          = require('del');
+var autoprefixer = require('gulp-autoprefixer');
+var concat       = require('gulp-concat');
+var uglify       = require('gulp-uglify');
+var imagemin     = require('gulp-imagemin');
+var cache        = require('gulp-cache');
+
+gulp.task('clean', function(cb) {
+  del(['dist/'], cb);
+});
+
+// just html
+gulp.task('copy:html', function() {
+  gulp.src('*.html').pipe(gulp.dest('dist/'));
+});
+
+gulp.task('copy:vendor', function() {
+   gulp.src('vendor/**/*').pipe(gulp.dest('dist/vendor'));
+});
+
+gulp.task('copy',['copy:html', 'copy:vendor']);
+
+gulp.task('images', function(){
+  gulp.src('images/**/*')
+    .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
+    .pipe(gulp.dest('dist/images/'));
+});
+
+gulp.task('styles', function(){
+  gulp.src('styles/**/*')
+    .pipe(autoprefixer('last 2 versions'))
+    .pipe(gulp.dest('dist/styles/'));
+});
+
+gulp.task('scripts', function(){
+  return gulp.src('scripts/**/*.js')
+    .pipe(plumber({
+      errorHandler: function (error) {
+        console.log(error.message);
+        this.emit('end');
+    }}))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/scripts/'));
+});
+
+gulp.task('build', ['clean', 'copy', 'styles', 'scripts']);
+
+gulp.task('default', function(){
+  gulp.watch(['index.html', 'styles/**/*.css', 'scripts/**/*.js'], ['build']);
+});
