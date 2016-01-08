@@ -7,7 +7,7 @@ function Article (opts) {
   this.publishedOn = opts.publishedOn;
 }
 
-// DONE: Instead of a global `articles` array, let's track this list of all articles directly on the
+// DONE: Instead of a global `articles = []` array, let's track this list of all articles directly on the
 // constructor function. Note: it is NOT on the prototype. In JavaScript, functions are themselves
 // objects, which means we can add properties/values to them at any time. In this case, we have
 // a key/value pair to track, that relates to ALL of the Article objects, so it does not belong on
@@ -52,7 +52,7 @@ Article.fetchAll = function() {
     articleView.initIndexPage();
     // Article.loadAll(//TODO: What do we pass in?
     // );
-    // articleView.something; //TODO: What method do we call to render the index page?
+    // articleView.someFunctionToCall; //TODO: What method do we call to render the index page?
   } else {
     // TODO: When we don't already have the rawData,
     // we need to retrieve the JSON file from the server with AJAX (which jQuery method is best for this?),
