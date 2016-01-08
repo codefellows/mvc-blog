@@ -77,13 +77,14 @@
       &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
     </footer>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
-    <script src="scripts/blogArticles.js"></script>
-    <script src="scripts/article.js"></script>
-    <script src="scripts/articleView.js"></script>
+    <script src="/vendor/scripts/jquery-2.1.4.js"></script>
+    <script src="/vendor/scripts/handlebars.js"></script>
+    <script src="/vendor/scripts/marked.js"></script>
+    <script src="/scripts/article.js"></script>
+    <script src="/scripts/articleView.js"></script>
     <script>
-      artcileView.initIndexPage()
+      // TODO: What model function do we need to call, to initiate the retrieval of data? 
+      Article.fetchAll();
     </script>
   </body>
 </html>
