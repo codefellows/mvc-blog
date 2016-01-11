@@ -22,14 +22,18 @@ gulp.task('copy:html', function() {
 });
 
 gulp.task('copy:vendor', function() {
-   gulp.src('vendor/**/*').pipe(gulp.dest('dist/vendor'));
+  gulp.src('vendor/**/*').pipe(gulp.dest('dist/vendor'));
 });
 
 gulp.task('copy:fonts', function() {
-   gulp.src('styles/fonts/**/*').pipe(gulp.dest('dist/styles/fonts/'));
+  gulp.src('styles/fonts/**/*').pipe(gulp.dest('dist/styles/fonts/'));
 });
 
-gulp.task('copy',['copy:html', 'copy:vendor', 'copy:fonts']);
+gulp.task('copy:data', function() {
+  gulp.src('data/*.json').pipe(gulp.dest('dist/data/'));
+});
+
+gulp.task('copy',['copy:html', 'copy:vendor', 'copy:fonts', 'copy:data']);
 
 gulp.task('images', function(){
   gulp.src('images/**/*')
@@ -50,7 +54,7 @@ gulp.task('scripts', function(){
       errorHandler: function (error) {
         console.log(error.message);
         this.emit('end');
-    }}))
+      }}))
     .pipe(uglify())
     .pipe(gulp.dest('dist/scripts/'));
 });
