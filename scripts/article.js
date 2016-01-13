@@ -22,16 +22,17 @@
   Article.createTable = function(callback) {
     // TODO: Set up a DB table for articles.
     webDB.execute(
-      'CREATE TABLE IF NOT EXISTS articles ('+
-        'id INTEGER PRIMARY KEY, '+
-        'title VARCHAR(255) NOT NULL, '+
-        'author VARCHAR(255) NOT NULL, '+
-        'authorUrl VARCHAR (255), '+
-        'category VARCHAR(20), '+
-        'publishedOn DATETIME, '+
+      'CREATE TABLE IF NOT EXISTS articles (' +
+        'id INTEGER PRIMARY KEY, ' +
+        'title VARCHAR(255) NOT NULL, ' +
+        'author VARCHAR(255) NOT NULL, ' +
+        'authorUrl VARCHAR (255), ' +
+        'category VARCHAR(20), ' +
+        'publishedOn DATETIME, ' +
         'body TEXT NOT NULL);',
       function(result) {
         console.log('Successfully set up the articles table.', result);
+        if (callback) callback();
       }
     );
   };
@@ -84,16 +85,7 @@
     );
   };
 
-  // TODO: Refactor to read the raw data from the database, rather than localStorage.
-  Article.loadAll = function(rawData) {
-    rawData.sort(function(a,b) {
-      return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
-    });
-
-    Article.all = rawData.map(function(ele) {
-      return new Article(ele);
-    });
-  };
+  // DONE: Refactor to expect the raw data from the database, rather than localStorage.
   Article.loadAll = function(rows) {
     Article.all = rows.map(function(ele) {
       return new Article(ele);
@@ -102,21 +94,9 @@
 
   // TODO: Refactor this to check if the database holds any records or not. If the DB is empty,
   // we need to retrieve the JSON and process it.
-  // If the DB has data already, we'll load it up, and then hand off control to the View.
+  // If the DB has data already, we'll load up the data (sorted!), and then hand off control to the View.
   Article.fetchAll = function(next) {
-    if (localStorage.rawData) {
-      Article.loadAll(JSON.parse(localStorage.rawData));
-      next();
-    } else {
-      $.getJSON('/data/hackerIpsum.json', function(rawData) {
-        localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
-        Article.loadAll(rawData);
-        next();
-      });
-    }
-  };
-  Article.fetchAll = function(next) {
-    webDB.execute('SELECT * FROM articles', function(rows) {
+    webDB.execute('SELECT * FROM articles ORDER BY publishedOn DESC', function(rows) {
       if (rows.length) {
         Article.loadAll(rows);
         next();
@@ -130,7 +110,7 @@
           webDB.execute('SELECT * FROM articles', function(rows) {
             Article.loadAll(rows);
             next();
-          })
+          });
         });
       }
     });
@@ -165,13 +145,13 @@
           return a.author === author;
         })
         .map(function(a) {
-          return a.body.match(/\b\w+/g).length
+          return a.body.match(/\b\w+/g).length;
         })
         .reduce(function(a, b) {
           return a + b;
         })
-      }
-    })
+      };
+    });
   };
 
   Article.stats = function() {
@@ -180,7 +160,7 @@
       numWords: Article.numwords(),
       Authors: Article.allAuthors(),
     };
-  }
+  };
 
   module.Article = Article;
 })(window);
