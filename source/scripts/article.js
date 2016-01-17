@@ -1,7 +1,5 @@
 (function(module) {
   function Article (opts) {
-    // DONE: Convert property assignment to Functional Programming style. Now, ALL properties of `opts` will be
-    // assigned as properies of the newly created article object.
     Object.keys(opts).forEach(function(e, index, keys) {
       this[e] = opts[e];
     },this);
@@ -20,7 +18,6 @@
   };
 
   Article.createTable = function(callback) {
-    // TODO: Set up a DB table for articles.
     webDB.execute(
       'CREATE TABLE IF NOT EXISTS articles (' +
         'id INTEGER PRIMARY KEY, ' +
@@ -38,15 +35,12 @@
   };
 
   Article.truncateTable = function(callback) {
-    // Delete all records from given table.
     webDB.execute(
       'DELETE FROM articles;',
       callback
     );
   };
 
-
-  // TODO: Insert an article instance into the database:
   Article.prototype.insertRecord = function(callback) {
     webDB.execute(
       [
@@ -59,7 +53,6 @@
     );
   };
 
-  // TODO: Delete an article instance from the database:
   Article.prototype.deleteRecord = function(callback) {
     webDB.execute(
       [
@@ -72,7 +65,6 @@
     );
   };
 
-  // TODO: Update an article instance, overwriting it's properties into the corresponding record in the database:
   Article.prototype.updateRecord = function(callback) {
     webDB.execute(
       [
@@ -85,16 +77,12 @@
     );
   };
 
-  // DONE: Refactor to expect the raw data from the database, rather than localStorage.
   Article.loadAll = function(rows) {
     Article.all = rows.map(function(ele) {
       return new Article(ele);
     });
   };
 
-  // TODO: Refactor this to check if the database holds any records or not. If the DB is empty,
-  // we need to retrieve the JSON and process it.
-  // If the DB has data already, we'll load up the data (sorted!), and then hand off control to the View.
   Article.fetchAll = function(next) {
     webDB.execute('SELECT * FROM articles ORDER BY publishedOn DESC', function(rows) {
       if (rows.length) {
