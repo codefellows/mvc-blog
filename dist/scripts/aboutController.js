@@ -1,0 +1,1 @@
+!function(n){var o={};o.index=function(){$("main > section").hide(),$("#about").show()},n.aboutController=o}(window);
