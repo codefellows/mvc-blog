@@ -1,5 +1,5 @@
-var requestProxy = require('express-request-proxy');
-var express = require('express'),
+var requestProxy = require('express-request-proxy'),
+  express = require('express'),
   port = process.env.PORT || 3000,
   app = express();
 
@@ -16,6 +16,7 @@ app.get('/github/*', proxyGitHub);
 app.use(express.static('./'));
 
 app.get('*', function(request, response) {
+  console.log('New request:', request.url);
   response.sendFile('index.html', { root: '.' });
 });
 
