@@ -1,12 +1,10 @@
 (function(module) {
   var articlesController = {};
 
-  Article.createTable();
+  Article.createTable();  // Ensure the database table is properly initialized
 
   articlesController.index = function() {
     Article.fetchAll(articleView.initIndexPage);
-
-    $('#articles').show().siblings().hide();
   };
 
   module.articlesController = articlesController;

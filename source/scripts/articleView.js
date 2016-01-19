@@ -1,9 +1,7 @@
 (function(module) {
 
-  // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
   var articleView = {};
 
-  // DONE: Convert the model .toHTML method to a proper View method, since it handles the presentation of the data:
   var render = function(article) {
     var template = Handlebars.compile($('#article-template').text());
 
@@ -70,7 +68,8 @@
   };
 
   articleView.initNewArticlePage = function() {
-    $('.tab-content').show();
+    $('#articles').show().siblings().hide();
+
     $('#export-field').hide();
     $('#article-json').on('focus', function(){
       this.select();
