@@ -1,10 +1,12 @@
 (function(module) {
   var aboutController = {};
 
-  // TODO: Define a function that hides all main section elements, and then reveals just the #about section:
   aboutController.index = function() {
-    $('main > section').hide();
-    $('#about').show();
+    $('#about').show().siblings().hide();
+
+    // TODO: Call a function to load all the data.
+    // Pass a view function as a callback, so the view will render after the data is loaded.
+    repos.requestRepos(repoView.index);
   };
 
   module.aboutController = aboutController;
