@@ -10,7 +10,8 @@
           '&sort=updated')
     .done(function(data, message, xhr) {
       repos.all = data;
-    });
+    })
+    .done(callback);
   };
 
   repos.with = function(attr) {
