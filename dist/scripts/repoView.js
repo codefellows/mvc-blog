@@ -1,0 +1,1 @@
+!function(n){var i={},o=function(){var n=$("#about");n.find("ul").empty(),n.show().siblings().hide()},t=function(n){return $("<li>").html('<a href="'+n.html_url+'">'+n.full_name+"</a>")};i.index=function(){o(),$("#about ul").append(repos["with"]("forks_count").map(t))},n.repoView=i}(window);

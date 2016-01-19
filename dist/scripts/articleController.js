@@ -1,1 +1,1 @@
-!function(e){var i={};Article.createTable(),i.index=function(){Article.fetchAll(articleView.initIndexPage),$("main > section").hide(),$("#articles").show()},e.articlesController=i}(window);
+!function(e){var i={};Article.createTable(),i.index=function(){Article.fetchAll(articleView.initIndexPage)},e.articlesController=i}(window);

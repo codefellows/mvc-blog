@@ -1,1 +1,1 @@
-!function(n){var o={};o.index=function(){$("main > section").hide(),$("#about").show()},n.aboutController=o}(window);
+!function(e){var o={};o.index=function(){repos.requestRepos(repoView.index)},e.aboutController=o}(window);

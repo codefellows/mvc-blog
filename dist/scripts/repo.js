@@ -1,0 +1,1 @@
+!function(e){var n={};n.all=[],n.requestRepos=function(e){$.get("/github/users/brookr/repos?per_page=100&sort=updated").done(function(e,o,r){n.all=e}).done(e)},n["with"]=function(e){return n.all.filter(function(n){return n[e]})},e.repos=n}(window);
