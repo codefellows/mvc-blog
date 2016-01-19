@@ -17,7 +17,6 @@
       if (!$(this).hasClass('template')) {
         var val = $(this).find('address a').text();
         var optionTag = '<option value="' + val + '">' + val + '</option>';
-        // Done: Ensure authors listed in the filter are unique
         if ($('#author-filter option[value="' + val + '"]').length === 0) {
           $('#author-filter').append(optionTag);
         }

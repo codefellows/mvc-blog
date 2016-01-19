@@ -3,7 +3,6 @@
 
   repos.all = [];
 
-  // TODO: Convert this ajax call into a get request to the proxy end point provided by server.js.
   repos.requestRepos = function(callback) {
     $.get('/github/users/brookr/repos' +
           '?per_page=100' +
