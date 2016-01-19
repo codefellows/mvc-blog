@@ -104,6 +104,8 @@
   };
 
   articleView.initIndexPage = function() {
+    $('#articles').show().siblings().hide();
+
     Article.all.forEach(function(a){
       $('#articles').append(render(a));
     });
