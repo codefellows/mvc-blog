@@ -33,7 +33,11 @@ gulp.task('copy:data', function() {
   gulp.src('source/data/*.json').pipe(gulp.dest('dist/data/'));
 });
 
-gulp.task('copy',['copy:html', 'copy:vendor', 'copy:fonts', 'copy:data']);
+gulp.task('copy:config', function() {
+  gulp.src('source/*.js*').pipe(gulp.dest('dist/'));
+});
+
+gulp.task('copy',['copy:html', 'copy:vendor', 'copy:fonts', 'copy:data', 'copy:config']);
 
 gulp.task('images', function(){
   gulp.src('source/images/**/*')
