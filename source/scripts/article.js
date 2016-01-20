@@ -17,10 +17,7 @@
         'category VARCHAR(20), ' +
         'publishedOn DATETIME, ' +
         'body TEXT NOT NULL);',
-      function(result) {
-        console.log('Successfully set up the articles table.', result);
-        if (callback) callback();
-      }
+      callback
     );
   };
 
@@ -73,11 +70,11 @@
     });
   };
 
-  Article.fetchAll = function(next) {
+  Article.fetchAll = function(callback) {
     webDB.execute('SELECT * FROM articles ORDER BY publishedOn DESC', function(rows) {
       if (rows.length) {
         Article.loadAll(rows);
-        next();
+        callback();
       } else {
         $.getJSON('/data/hackerIpsum.json', function(rawData) {
           // Cache the json, so we don't need to request it next time:
@@ -87,13 +84,26 @@
           });
           webDB.execute('SELECT * FROM articles', function(rows) {
             Article.loadAll(rows);
-            next();
+            callback();
           });
         });
       }
     });
   };
 
+  Article.findWhere = function(field, value, callback) {
+    webDB.execute(
+      [
+        {
+          sql: 'SELECT * FROM articles WHERE ' + field + ' = ?;',
+          data: [value]
+        }
+      ],
+      callback
+    );
+  };
+
+  // DONE: Example of synchronous, FP approach to getting unique data
   Article.allAuthors = function() {
     return Article.all.map(function(article) {
       return article.author;
@@ -104,6 +114,11 @@
       }
       return names;
     }, []);
+  };
+
+  // DONE: Example of async, SQL-based approach to getting unique data
+  Article.allCategories = function(callback) {
+    webDB.execute('SELECT DISTINCT category FROM articles;', callback);
   };
 
   Article.numWordsAll = function() {
