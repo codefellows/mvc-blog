@@ -1,1 +1,1 @@
-page("/",articlesController.index),page("/about",aboutController.index),page();
+page("/",articlesController.loadAll,articlesController.index),page("/about",aboutController.index),page("/article/:id",articlesController.loadById,articlesController.index),page("/category","/"),page("/author","/"),page("/author/:authorName",articlesController.loadByAuthor,articlesController.index),page("/category/:categoryName",articlesController.loadByCategory,articlesController.index),page();
