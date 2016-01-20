@@ -21,14 +21,14 @@
     // Example of using model method with FP, synchronous approach:
     // NB: This method is dependant on info being in the DOM. Only authors of shown articles are loaded.
     options = Article.allAuthors().map(function(author) { return template({val: author}); });
-    if ($('#author-filter option').length > 0) { // Prevent duplication
+    if ($('#author-filter option').length < 2) { // Prevent duplication
       $('#author-filter').append(options);
     };
 
     // Example of using model method with async, SQL-based approach:
     // This approach is DOM-independent, since it reads from the DB directly.
     Article.allCategories(function(rows) {
-      if ($('#category-filter option').length > 0) {
+      if ($('#category-filter option').length < 2) {
         $('#category-filter').append(
           rows.map(function(row) {
             return template({val: row.category});
