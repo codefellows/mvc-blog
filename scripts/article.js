@@ -1,4 +1,4 @@
-function Article (opts) {
+  function Article (opts) {
   this.author = opts.author;
   this.authorUrl = opts.authorUrl;
   this.title = opts.title;
@@ -70,7 +70,7 @@ Article.fetchAll = function() {
 // STRETCH GOAL: Cache the data source file etag header, to see if it's updated!
 // This version follows! Helper function .getAll required.
 // This could be dramatically cleaned up with some well-named functions.
-Article.fetchAll = function() {
+/*Article.fetchAll = function() {
   if (localStorage.rawData) {
     // Lets get the eTag, and see how it compares with what we have stored.
     $.ajax({
@@ -92,7 +92,7 @@ Article.fetchAll = function() {
     Article.getAll();
   }
 };
-
+*/
 Article.getAll = function() {
   $.getJSON('/data/hackerIpsum.json', function(rawData) {
     Article.loadAll(rawData);
