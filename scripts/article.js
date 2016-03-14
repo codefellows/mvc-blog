@@ -122,8 +122,7 @@
     })
   };
 
-  // Below is a little bonus section that is not requred, but a fun way to quickly
-  // see a breakdown of blog stats.
+  // Below is an example `stretch goal` that quickly generates a breakdown of blog stats.
 
   Article.stats = function() {
     return {
