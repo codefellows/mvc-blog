@@ -29,9 +29,12 @@
 
     // TODO: Refactor this forEach code, by using a `.map` call instead, since want we are trying to accomplish
     // is the transformation of one colleciton into another.
+
+    /* OLD forEach():
     rawData.forEach(function(ele) {
       Article.all.push(new Article(ele));
-    })
+    });
+    */
     Article.all = rawData.map(function(ele) {
       return new Article(ele);
     });
@@ -41,7 +44,8 @@
   // and process it, then hand off control to the View.
   // TODO: Refactor this function, so it accepts an argument of a callback function (likely a view function)
   // to execute once the loading of articles is done.
-  /*
+
+  /* OLD function
   Article.fetchAll = function() {
     if (localStorage.rawData) {
       Article.loadAll(JSON.parse(localStorage.rawData));
@@ -55,15 +59,15 @@
     }
   };
   */
-  Article.fetchAll = function(next) {
+  Article.fetchAll = function(next) { // pass in a callback parameter, in this case, `next`
     if (localStorage.rawData) {
       Article.loadAll(JSON.parse(localStorage.rawData));
-      next();
+      next(); // now call `next` - after the loading of data has finished.
     } else {
       $.getJSON('/data/hackerIpsum.json', function(rawData) {
         Article.loadAll(rawData);
         localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
-        next();
+        next(); // now call `next` - after the loading of data has finished.
       });
     }
   };
@@ -73,51 +77,61 @@
     return Article.all.map(function(article) {
       return article.author;
     })
-    .reduce(function(names, name) {
-      if (names.indexOf(name) === -1) {
-        names.push(name);
+    .reduce(function(names, name) { // `names` will map to the array accumulator specified below
+      if (names.indexOf(name) === -1) { // if there is no index for the author,
+        names.push(name); // add the author!
       }
       return names;
-    }, []);
+    }, []);  // the [] is the accumulator which we check against to only
+             // push unique authors to.
   };
 
   // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
   Article.numWordsAll = function() {
-    return Article.all.map(function(article) {
-      return article.body.match(/\b\w+/g).length;
+    return Article.all.map(function(article) { // map the entire Article.all collection
+      return article.body.match(/\b\w+/g).length;  // regexp matching word instances
     })
     .reduce(function(a, b) {
-      return a + b;
+      return a + b;  // now sum the total number of words!
     })
   };
 
   Article.numWordsByAuthor = function() {
-    return Article.allAuthors().map(function(author) {
+    return Article.allAuthors().map(function(author) { // the result of the initial .map() to generate
+      // unique authors will now have another .map() call to begin generating further stats!
+
       // TODO: Transform each author string into an object with properties for
-      // the author's name, and the total number of words across all articles written by the specified author.
+      // the author's name, as well as the total number of words across all articles
+      // written by the specified author.
       return {
         name: author,
-        numWords: Article.all.filter(function(a) {
-          return a.author === author;
+        numWords: Article.all.filter(function(a) {  // filter out all the articles based on an
+          // author instance. `a` is a reference the current article.
+          return a.author === author; // only return articles when the author names match.
         })
         .map(function(a) {
-          return a.body.match(/\b\w+/g).length
+          return a.body.match(/\b\w+/g).length  // map this new author article collection based on
+          // a regexp matching words, so the new array collection will now be all the words written
+          // by the current author.
         })
-        .reduce(function(a, b) {
+        .reduce(function(a, b) { // now reduce this array down to a sum of all the words for a
+          // particular author!
           return a + b;
         })
       }
     })
   };
 
+  // Below is a little bonus section that is not requred, but a fun way to quickly
+  // see a breakdown of blog stats.
+
   Article.stats = function() {
     return {
       numArticles: Article.all.length,
-      numWords: Article.numwords(),
+      numWords: Article.numWordsAll(),
       Authors: Article.allAuthors(),
-
     }
-  }
+  };
 
   module.Article = Article;
 })(window);
