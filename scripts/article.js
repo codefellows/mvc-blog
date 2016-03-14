@@ -92,7 +92,7 @@ Article.fetchAll = function() {
     Article.getAll();
   }
 };
-*/
+
 Article.getAll = function() {
   $.getJSON('/data/hackerIpsum.json', function(rawData) {
     Article.loadAll(rawData);
@@ -100,3 +100,5 @@ Article.getAll = function() {
     articleView.initIndexPage()
   });
 };
+
+*/
