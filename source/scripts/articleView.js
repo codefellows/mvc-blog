@@ -97,9 +97,12 @@
   };
 
   articleView.initIndexPage = function() {
-    Article.all.forEach(function(a){
-      $('#articles').append(a.toHtml());
-    });
+    // Only append the first time!
+    if($('#articles section').length === 0) {
+      Article.all.forEach(function(a){
+        $('#articles').append(a.toHtml());
+      });
+    };
 
     articleView.populateFilters();
     articleView.handleCategoryFilter();
