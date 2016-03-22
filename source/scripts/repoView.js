@@ -10,10 +10,14 @@
   };
 
   // TODO: How do you want to render a single repo as html? Return your filled in HTML template.
+  var render = Handlebars.compile($('#repo-template').text());
+
+  /* Alternate (and trickier) Render Version with jQuery:
   var render = function(repo) {
     return $('<li>')
       .html('<a href="' + repo.html_url + '">' + repo.full_name + '</a>');
   };
+  */
 
   repoView.index = function() {
     ui();
