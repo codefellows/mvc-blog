@@ -7,7 +7,7 @@
     // TODO: How would you like to fetch your repos? Don't forget to call the callback.
     $.ajax({
       url: 'https://api.github.com/users/brookr/repos' +
-            '?per_page=100' +
+            '?per_page=5' +
             '&sort=updated',
       type: 'GET',
       headers: { 'Authorization': 'token ' + githubToken },
