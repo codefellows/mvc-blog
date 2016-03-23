@@ -9,7 +9,8 @@
     $about.show().siblings().hide();
   };
 
-  // TODO: How do you want to render a single repo as html? Return your filled in HTML template.
+  // TODO: Remember that new Handlebars template? Let's compile it!
+  // Save the result in this `render` variable.
   var render = Handlebars.compile($('#repo-template').text());
 
   /* Alternate (and trickier) Render Version with jQuery:
