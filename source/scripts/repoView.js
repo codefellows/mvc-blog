@@ -8,10 +8,7 @@
     $about.show().siblings().hide();
   };
 
-  var render = function(repo) {
-    return $('<li>')
-      .html('<a href="' + repo.html_url + '">' + repo.full_name + '</a>');
-  };
+  var render = Handlebars.compile($('#repo-template').text());
 
   repoView.index = function() {
     ui();

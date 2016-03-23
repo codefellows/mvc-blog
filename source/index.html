@@ -23,6 +23,18 @@
         <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
+    <script id="repo-template" type="text/x-handlebars-template">
+      <li>
+        <a href="{{html_url}}" target="_blank"><h3>{{name}}</h3></a>
+        <p>Description: {{description}}</p>
+        <p>Language: {{language}}</p>
+        <p>Created: {{created_at}}</p>
+        <p>Last updated: {{updated_at}}</p>
+        {{#if watchers_count}}
+          <p>{{watchers_count}} watching this repo</p>
+        {{/if}}
+      </li>
+    </script>
   </head>
   <body>
     <header class="site-header clearfix">
@@ -87,6 +99,7 @@
     <script src="/scripts/articleView.js"></script>
     <script src="/scripts/articleController.js"></script>
 
+    <!-- TODO: Our githubToken.js file is gone! Where instead can we securely place our token?-->
     <script src="/scripts/repo.js"></script>
     <script src="/scripts/repoView.js"></script>
     <script src="/scripts/aboutController.js"></script>

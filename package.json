@@ -20,5 +20,9 @@
     "gulp-plumber": "1.0.0",
     "gulp-rename": "1.2.2",
     "gulp-uglify": "1.2.0"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-request-proxy": "^2.0.0"
   }
 }
