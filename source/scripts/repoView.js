@@ -25,7 +25,7 @@
 
     // The jQuery `append` method lets us append an entire array of HTML elements at once:
     $('#about ul').append(
-      repos.with('name').map(render) // Want to filter by a different property than name?
+      repos.with('name').map(render) // Want to filter by a different property other than name?
     );
   };
 
