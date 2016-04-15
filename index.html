@@ -30,6 +30,18 @@
         <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
+
+    <!--
+      STRETCH! Look at all that duplicated markup in your #filter list items! Looks like a good opportunity to use a template. Make a small template for filters, and re-render the list once you have data to populate it with.
+     -->
+     <script id="author-filter-template" type="text/x-handlebars-template">
+      <option value="{{author}}">{{author}}</option>
+     </script>
+
+     <script id="category-filter-template" type="text/x-handlebars-template">
+      <option value="{{category}}">{{category}}</option>
+     </script>
+
   </head>
   <body>
     <header class="site-header clearfix">

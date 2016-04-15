@@ -1,4 +1,5 @@
 var articles = [];
+var categories = [];
 
 function Article (opts) {
   this.author = opts.author;
@@ -9,11 +10,11 @@ function Article (opts) {
   this.publishedOn = opts.publishedOn;
 }
 
-Article.prototype.toHtml = function() {
+Article.prototype.toHtml = function(templateId) {
   // TODO: Use handlebars to render your articles.
   //       - Get your template from the DOM.
   //       - Now "compile" your template with Handlebars.
-  var template = Handlebars.compile($('#article-template').text());
+  var template = Handlebars.compile((templateId).text());
 
   // DONE: If your template will use properties that aren't on the object yet, add them.
   //   Since your template can't hold any JS logic, we need to execute the logic here.
@@ -26,6 +27,11 @@ Article.prototype.toHtml = function() {
   return template(this);
 };
 
+Article.prototype.populateFilters = function() {
+ var filter = Handlebars.compile($('#filter-template').text());
+ return filter(this);
+};
+
 rawData.sort(function(a,b) {
   return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
 });
@@ -35,5 +41,11 @@ rawData.forEach(function(ele) {
 });
 
 articles.forEach(function(a){
-  $('#articles').append(a.toHtml());
+  $('#articles').append(a.toHtml($('#article-template')));
+  $('#author-filter').append(a.toHtml($('#author-filter-template')));
+
+  if(categories.indexOf(a.category) == -1) {
+    $('#category-filter').append(a.toHtml($('#category-filter-template')));
+    categories.push(a.category);
+  };
 });
