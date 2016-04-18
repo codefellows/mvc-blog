@@ -28,15 +28,15 @@ Article.prototype.toHtml = function() {
 // just single instances. Object-oriented programming would call these "class-level" functions,
 // that are relevant to the entire "class" of objects that are Articles.
 
-// DONE: This function will take the rawData, how ever it is provided,
+// DONE: This function will take our data, how ever it is provided,
 // and use it to instantiate all the articles. This code is moved from elsewhere, and
 // encapsulated in a simply-named function for clarity.
-Article.loadAll = function(rawData) {
-  rawData.sort(function(a,b) {
+Article.loadAll = function(dataPassedIn) {
+  dataPassedIn.sort(function(a,b) {
     return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
   });
 
-  rawData.forEach(function(ele) {
+  dataPassedIn.forEach(function(ele) {
     Article.all.push(new Article(ele));
   })
 }
@@ -44,11 +44,11 @@ Article.loadAll = function(rawData) {
 // This function will retrieve the data from either a local or remote source,
 // and process it, then hand off control to the View.
 Article.fetchAll = function() {
-  if (localStorage.rawData) {
+  if (localStorage.hackerIpsum) {
     // When rawData is already in localStorage,
     // we can load it with the .loadAll function above,
     // and then render the index page (using the proper method on the articleView object).
-    Article.loadAll(JSON.parse(localStorage.rawData)); //TODO: What do we pass in?
+    Article.loadAll(JSON.parse(localStorage.hackerIpsum)); //TODO: What do we pass in?
     articleView.initIndexPage(); //TODO: What method do we call to render the index page?
   } else {
     // TODO: When we don't already have the rawData,
@@ -56,9 +56,9 @@ Article.fetchAll = function() {
     // cache it in localStorage so we can skip the server call next time,
     // then load all the data into Article.all with the .loadAll function above,
     // and then render the index page.
-    $.getJSON('/data/hackerIpsum.json', function(rawData) {
-      Article.loadAll(rawData);
-      localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
+    $.getJSON('/data/hackerIpsum.json', function(responseData) {
+      Article.loadAll(responseData);
+      localStorage.hackerIpsum = JSON.stringify(responseData); // Cache the json, so we don't need to request it next time.
       articleView.initIndexPage()
     });
   }
@@ -80,7 +80,7 @@ Article.fetchAll = function() {
           localStorage.eTag = eTag;
           Article.getAll();
         } else {
-          Article.loadAll(JSON.parse(localStorage.rawData));
+          Article.loadAll(JSON.parse(localStorage.hackerIpsum));
           articleView.initIndexPage();
         }
       }
@@ -91,9 +91,9 @@ Article.fetchAll = function() {
 };
 
 Article.getAll = function() {
-  $.getJSON('/data/hackerIpsum.json', function(rawData) {
-    Article.loadAll(rawData);
-    localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
+  $.getJSON('/data/hackerIpsum.json', function(data) {
+    Article.loadAll(data);
+    localStorage.hackerIpsum = JSON.stringify(data); // Cache the json, so we don't need to request it next time.
     articleView.initIndexPage()
   });
 };
