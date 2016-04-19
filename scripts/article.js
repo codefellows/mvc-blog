@@ -22,20 +22,21 @@
     return template(this);
   };
 
-  Article.loadAll = function(rawData) {
-    rawData.sort(function(a,b) {
+  Article.loadAll = function(passedInData) {
+    passedInData.sort(function(a,b) {
       return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
     });
 
-    // TODO: Refactor this forEach code, by using a `.map` call instead, since want we are trying to accomplish
+    // TODO: Refactor this forEach code by using `.map()` - since
+    // what we are trying to accomplish
     // is the transformation of one colleciton into another.
 
     /* OLD forEach():
-    rawData.forEach(function(ele) {
+    passedInData.forEach(function(ele) {
       Article.all.push(new Article(ele));
     });
     */
-    Article.all = rawData.map(function(ele) {
+    Article.all = passedInData.map(function(ele) {
       return new Article(ele);
     });
   };
