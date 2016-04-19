@@ -123,7 +123,7 @@
     })
   };
 
-  // Below is an example `stretch goal` that quickly generates a breakdown of blog stats.
+  // Below is a functional example that quickly generates a breakdown of blog stats.
 
   Article.stats = function() {
     return {
