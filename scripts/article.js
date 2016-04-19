@@ -60,6 +60,9 @@
     }
   };
   */
+
+/* With next() - but no eTag check
+
   Article.fetchAll = function(next) { // pass in a callback parameter, in this case, `next`
     if (localStorage.rawData) {
       Article.loadAll(JSON.parse(localStorage.rawData));
@@ -72,6 +75,37 @@
       });
     }
   };
+
+*/
+
+  Article.fetchAll = function(next) {
+    if (localStorage.hackerIpsum) {
+      $.ajax({
+        type: 'HEAD',
+        url: '/data/hackerIpsum.json',
+        success: function(data, message, xhr) {
+          var eTag = xhr.getResponseHeader('eTag');
+          if (!localStorage.eTag || eTag !== localStorage.eTag) {
+            localStorage.eTag = eTag;
+            Article.getAll(next);
+          } else {
+            Article.loadAll(JSON.parse(localStorage.hackerIpsum));
+            next();
+          }
+        }
+      });
+    } else {
+      Article.getAll(next);
+    }
+  };
+
+  Article.getAll = function(next) {
+  $.getJSON('/data/hackerIpsum.json', function(responseData) {
+    Article.loadAll(responseData);
+    localStorage.hackerIpsum = JSON.stringify(responseData);
+    next();
+  });
+};
 
   // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
   Article.numWordsAll = function() {
@@ -125,13 +159,13 @@
 
   // Below is a functional example that quickly generates a breakdown of blog stats.
 
-  Article.stats = function() {
+  /* Article.stats = function() {
     return {
       numArticles: Article.all.length,
       numWords: Article.numWordsAll(),
       Authors: Article.allAuthors(),
     }
-  };
+  }; */
 
   module.Article = Article;
 })(window);
