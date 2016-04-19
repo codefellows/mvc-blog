@@ -45,13 +45,13 @@ Article.loadAll = function(dataPassedIn) {
 // and process it, then hand off control to the View.
 Article.fetchAll = function() {
   if (localStorage.hackerIpsum) {
-    // When rawData is already in localStorage,
+    // When our data is already in localStorage,
     // we can load it with the .loadAll function above,
     // and then render the index page (using the proper method on the articleView object).
     Article.loadAll(JSON.parse(localStorage.hackerIpsum)); //TODO: What do we pass in?
     articleView.initIndexPage(); //TODO: What method do we call to render the index page?
   } else {
-    // TODO: When we don't already have the rawData,
+    // TODO: When we don't already have our data,
     // we need to retrieve the JSON file from the server with AJAX (which jQuery method is best for this?),
     // cache it in localStorage so we can skip the server call next time,
     // then load all the data into Article.all with the .loadAll function above,
@@ -59,22 +59,22 @@ Article.fetchAll = function() {
     $.getJSON('/data/hackerIpsum.json', function(responseData) {
       Article.loadAll(responseData);
       localStorage.hackerIpsum = JSON.stringify(responseData); // Cache the json, so we don't need to request it next time.
-      articleView.initIndexPage()
+      articleView.initIndexPage();
     });
   }
 }
 
-// STRETCH GOAL: Cache the data source file etag header, to see if it's updated!
-// This version follows! Helper function .getAll required.
-// This could be dramatically cleaned up with some well-named functions.
-/*Article.fetchAll = function() {
-  if (localStorage.rawData) {
+/* //STRETCH GOAL: Cache the data source file etag header, to see if it's updated!
+   //This version utilizes a DRY function .getAll()
+
+Article.fetchAll = function() {
+  // if the user already has hackerIpsum saved to the localStorage object,
+  if (localStorage.hackerIpsum) {
     // Lets get the eTag, and see how it compares with what we have stored.
     $.ajax({
       type: 'HEAD',
       url: '/data/hackerIpsum.json',
       success: function(data, message, xhr) {
-        console.log(xhr); // Want to see what you are getting back from the server??
         var eTag = xhr.getResponseHeader('eTag');
         if (!localStorage.eTag || eTag !== localStorage.eTag) {
           localStorage.eTag = eTag;
@@ -94,7 +94,7 @@ Article.getAll = function() {
   $.getJSON('/data/hackerIpsum.json', function(data) {
     Article.loadAll(data);
     localStorage.hackerIpsum = JSON.stringify(data); // Cache the json, so we don't need to request it next time.
-    articleView.initIndexPage()
+    articleView.initIndexPage();
   });
 };
 
