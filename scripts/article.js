@@ -28,23 +28,14 @@
         'author VARCHAR(255) NOT NULL, ' +
         'authorUrl VARCHAR (255), ' +
         'category VARCHAR(20), ' +
-        'publishedOn DATETIME, ' +
+        'publishedOn DATE, ' +
         'body TEXT NOT NULL);',
-      function(result) {
-        console.log('Successfully set up the articles table.', result);
+      function() {
+        console.log('Successfully set up the articles table.');
         if (callback) callback();
       }
     );
   };
-
-  Article.truncateTable = function(callback) {
-    // Delete all records from given table.
-    webDB.execute(
-      'DELETE FROM articles;',
-      callback
-    );
-  };
-
 
   // TODO: Insert an article instance into the database:
   Article.prototype.insertRecord = function(callback) {
@@ -52,7 +43,7 @@
       [
         {
           'sql': 'INSERT INTO articles (title, author, authorUrl, category, publishedOn, body) VALUES (?, ?, ?, ?, ?, ?);',
-          'data': [this.title, this.author, this.authorUrl, this.category, this.publishedOn, this.body],
+          'data': [this.title, this.author, this.authorUrl, this.category, this.publishedOn, this.body]
         }
       ],
       callback
@@ -85,6 +76,14 @@
     );
   };
 
+  Article.truncateTable = function(callback) {
+    // Delete all records from given table.
+    webDB.execute(
+      'DELETE FROM articles;',
+      callback
+    );
+  };
+
   // DONE: Refactor to expect the raw data from the database, rather than localStorage.
   Article.loadAll = function(rows) {
     Article.all = rows.map(function(ele) {
@@ -92,9 +91,11 @@
     });
   };
 
-  // TODO: Refactor this to check if the database holds any records or not. If the DB is empty,
-  // we need to retrieve the JSON and process it.
-  // If the DB has data already, we'll load up the data (sorted!), and then hand off control to the View.
+  // TODO: Refactor this to check if the database holds any records or not.
+
+  // If the DB has data already, we'll load up the data (by descended published order), and then hand off control to the View.
+  // If the DB is empty, we need to retrieve the JSON and process it.
+
   Article.fetchAll = function(next) {
     webDB.execute('SELECT * FROM articles ORDER BY publishedOn DESC', function(rows) {
       if (rows.length) {
@@ -107,7 +108,7 @@
             var article = new Article(item); // Instantiate an article based on item from JSON
             article.insertRecord(); // Cache the article in DB
           });
-          webDB.execute('SELECT * FROM articles', function(rows) {
+          webDB.execute('SELECT * FROM articles ORDER BY publishedOn DESC', function(rows) {
             Article.loadAll(rows);
             next();
           });
