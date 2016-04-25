@@ -51,6 +51,8 @@
   // TODO: Once the routes are handling / and /about, we can delete this handleMainNav function. YESSSS!
   // Remeber to also remove any calls to this function.
 
+  //  This is where handleMainNav used to be!
+
   articleView.setTeasers = function() {
     $('.article-body *:nth-of-type(n+2)').hide();
 
