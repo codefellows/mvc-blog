@@ -17,8 +17,8 @@
         'category VARCHAR(20), ' +
         'publishedOn DATETIME, ' +
         'body TEXT NOT NULL);',
-      function(result) {
-        console.log('Successfully set up the articles table.', result);
+      function() {
+        console.log('Successfully set up the articles table.');
         if (callback) callback();
       }
     );
