@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
+    <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
 
     <script id="article-template" type="text/x-handlebars-template">
       <article class="clearfix" data-author="{{author}}" data-category="{{category}}">
@@ -23,6 +24,11 @@
         <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
+
+    <script id="author-template" type="text/x-handlebars-template">
+      <li><strong>{{name}}</strong>: {{numWords}} words written</li>
+    </script>
+
   </head>
   <body>
     <header class="site-header clearfix">
@@ -37,6 +43,7 @@
         <ul>
           <li class="tab" data-content="articles"><a href="/" class="icon-home"> Home</a></li>
           <li class="tab" data-content="about"><a href="/about" class="icon-address-book"> About</a></li>
+          <li class="tab" data-content="admin"><a href="/admin" class="icon-rocket">Admin</a></li>
           <li><a href="http://twitter.com/codefellowsSEA" target="_blank" class="icon-twitter3"> Twitter</a></li>
           <li><a href="http://github.com/" target="_blank" class="icon-github"> GitHub</a></li>
         </ul>
@@ -72,6 +79,15 @@
           </ul>
         </section>
       </section>
+      <section id="blog-stats">
+        <h1>Blog Stats</h1>
+        <dt>Total articles:</dt> <dd class="articles"></dd>
+        <dt>Total words:</dt> <dd class="words"></dd>
+        <h2>Author Stats</h2>
+        <p><em>Details on who is writing, and how much writing they are doing...</em></p>
+        <ul class="author-stats">
+        </ul>
+      </section>
     </main>
     <footer>
       &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
@@ -87,9 +103,9 @@
 
     <script src="/scripts/article.js"></script>
     <script src="/scripts/articleView.js"></script>
-    <script src="/scripts/articleController.js"></script>
-
-    <script src="/scripts/aboutController.js"></script>
+    <script src="/scripts/controllers/articleController.js"></script>
+    <script src="/scripts/controllers/adminController.js"></script>
+    <script src="/scripts/controllers/aboutController.js"></script>
 
     <script src="/scripts/routes.js"></script>
   </body>
