@@ -2,6 +2,7 @@
 // linked to a a single controller function to handle it:
 page('/', articlesController.index);
 page('/about', aboutController.index);
+page('/admin', adminController.index);
 
 // DONE: Activate page.js!
 page();

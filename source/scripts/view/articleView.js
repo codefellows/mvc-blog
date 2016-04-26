@@ -105,9 +105,11 @@
   };
 
   articleView.initIndexPage = function() {
-    Article.all.forEach(function(a){
-      $('#articles').append(render(a));
-    });
+    if($('#articles article').length === 0) {
+      Article.all.forEach(function(a){
+        $('#articles').append(render(a));
+      });
+    }
 
     articleView.populateFilters();
     articleView.handleCategoryFilter();
