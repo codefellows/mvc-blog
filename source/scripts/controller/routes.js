@@ -3,6 +3,7 @@ page('/',
   articlesController.index);
 
 page('/about', aboutController.index);
+page('/admin', adminController.index);
 
 page('/article/:id',
   articlesController.loadById,
