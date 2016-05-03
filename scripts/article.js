@@ -10,11 +10,11 @@ function Article (opts) {
   this.publishedOn = opts.publishedOn;
 }
 
-Article.prototype.toHtml = function(templateId) {
+Article.prototype.toHtml = function(scriptTemplateId) {
   // TODO: Use handlebars to render your articles.
   //       - Get your template from the DOM.
   //       - Now "compile" your template with Handlebars.
-  var template = Handlebars.compile((templateId).text());
+  var template = Handlebars.compile((scriptTemplateId).text());
 
   // DONE: If your template will use properties that aren't on the object yet, add them.
   //   Since your template can't hold any JS logic, we need to execute the logic here.
@@ -40,11 +40,11 @@ rawData.forEach(function(ele) {
   articles.push(new Article(ele));
 });
 
-articles.forEach(function(a){
+articles.forEach(function(a) {
   $('#articles').append(a.toHtml($('#article-template')));
   $('#author-filter').append(a.toHtml($('#author-filter-template')));
 
-  if(categories.indexOf(a.category) == -1) {
+  if(categories.indexOf(a.category) === -1) {
     $('#category-filter').append(a.toHtml($('#category-filter-template')));
     categories.push(a.category);
   };
