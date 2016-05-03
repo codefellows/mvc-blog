@@ -14,7 +14,7 @@ Article.prototype.toHtml = function(scriptTemplateId) {
   // TODO: Use handlebars to render your articles.
   //       - Get your template from the DOM.
   //       - Now "compile" your template with Handlebars.
-  var template = Handlebars.compile((scriptTemplateId).text());
+  var template = Handlebars.compile((scriptTemplateId).html());
 
   // DONE: If your template will use properties that aren't on the object yet, add them.
   //   Since your template can't hold any JS logic, we need to execute the logic here.
@@ -25,11 +25,6 @@ Article.prototype.toHtml = function(scriptTemplateId) {
 
   // TODO: Use the function that Handlebars gave you to return your filled-in html template for THIS article.
   return template(this);
-};
-
-Article.prototype.populateFilters = function() {
- var filter = Handlebars.compile($('#filter-template').text());
- return filter(this);
 };
 
 rawData.sort(function(a,b) {
