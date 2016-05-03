@@ -1,6 +1,18 @@
 // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
 var articleView = {};
 
+articleView.populateFilters = function() {
+  articles.forEach(function(a) {
+    $('#articles').append(a.toHtml('#article-template'));
+    $('#author-filter').append(a.toHtml('#author-filter-template'));
+
+    if(categories.indexOf(a.category) === -1) {
+      $('#category-filter').append(a.toHtml('#category-filter-template'));
+      categories.push(a.category);
+    };
+  });
+}
+
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
     if ($(this).val()) {
@@ -47,6 +59,7 @@ articleView.setTeasers = function() {
 };
 
 $(document).ready(function() {
+  articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
   articleView.handleMainNav();
