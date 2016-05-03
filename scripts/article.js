@@ -14,7 +14,7 @@ Article.prototype.toHtml = function(scriptTemplateId) {
   // TODO: Use handlebars to render your articles.
   //       - Get your template from the DOM.
   //       - Now "compile" your template with Handlebars.
-  var template = Handlebars.compile((scriptTemplateId).html());
+  var template = Handlebars.compile($(scriptTemplateId).html());
 
   // DONE: If your template will use properties that aren't on the object yet, add them.
   //   Since your template can't hold any JS logic, we need to execute the logic here.
@@ -27,20 +27,20 @@ Article.prototype.toHtml = function(scriptTemplateId) {
   return template(this);
 };
 
-rawData.sort(function(a,b) {
+ourLocalData.sort(function(a,b) {
   return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
 });
 
-rawData.forEach(function(ele) {
+ourLocalData.forEach(function(ele) {
   articles.push(new Article(ele));
 });
 
 articles.forEach(function(a) {
-  $('#articles').append(a.toHtml($('#article-template')));
-  $('#author-filter').append(a.toHtml($('#author-filter-template')));
+  $('#articles').append(a.toHtml('#article-template'));
+  $('#author-filter').append(a.toHtml('#author-filter-template'));
 
   if(categories.indexOf(a.category) === -1) {
-    $('#category-filter').append(a.toHtml($('#category-filter-template')));
+    $('#category-filter').append(a.toHtml('#category-filter-template'));
     categories.push(a.category);
   };
 });
