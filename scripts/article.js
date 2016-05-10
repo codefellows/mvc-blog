@@ -40,8 +40,8 @@ Article.prototype.toHtml = function() {
   $newArticle.find('.article-body').html(this.body);
   // This finds time elements with a pubdate attribute of 'datetime':
   $newArticle.find('time[pubdate]').attr('datetime', this.publishedOn);
-  // This is a separate inclusion of the publication date as a 'title' attribute
-  // to show on hover:
+  // This is an additional inclusion of the publication date as a 'title' attribute
+  // to show when a user hovers over the <time> element:
   $newArticle.find('time[pubdate]').attr('title', this.publishedOn);
   $newArticle.find('time').html('about ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago');
   $newArticle.append('<hr>');
