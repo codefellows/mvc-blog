@@ -40,6 +40,7 @@ articleView.handleAuthorFilter = function() {
       $('article').fadeIn();
       $('article.template').hide();
     }
+    // Reset the category-filter:
     $('#category-filter').val('');
   });
 };
@@ -57,6 +58,7 @@ articleView.handleCategoryFilter = function() {
       $('article').fadeIn();
       $('article.template').hide();
     }
+    // Reset the author-filter:
     $('#author-filter').val('');
   });
 };

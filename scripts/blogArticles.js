@@ -1,4 +1,4 @@
-var rawData = [
+var ourLocalData = [
   {
     title:       'Bacon Ipsum',
     category:    'food',
