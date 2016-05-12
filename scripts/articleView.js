@@ -87,8 +87,14 @@ articleView.setTeasers = function() {
   //       process any .read-on clicks that happen within child nodes.
   $('#articles').on('click', 'a.read-on', function(e) {
     e.preventDefault();
-    $(this).parent().find('*').fadeIn();
-    $(this).hide();
+    if($(this).text() === 'Read on →') {
+      $(this).parent().find('*').fadeIn();
+      $(this).text('Show Less');
+    } else {
+      $(this).html('Read on &rarr;');
+      $(this).parent().find('.article-body *:nth-of-type(n+2)').hide();
+    }
+
   });
 };
 
