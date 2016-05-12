@@ -10,6 +10,8 @@ function Article (opts) {
   this.publishedOn = opts.publishedOn;
 }
 
+// Note to TAs - this method below has been refactored after the stretch goals.
+// The students do not need to pass in any paramters to this function.
 Article.prototype.toHtml = function(scriptTemplateId) {
   // TODO: Use handlebars to render your articles.
   //       - Get your template from the DOM.
