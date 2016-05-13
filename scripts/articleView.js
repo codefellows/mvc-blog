@@ -5,7 +5,7 @@ articleView.populateFilters = function() {
   articles.forEach(function(a) {
     $('#articles').append(a.toHtml('#article-template'));
     $('#author-filter').append(a.toHtml('#author-filter-template'));
-    if($('#category-filter option:contains("'+ a.category + '")').length == 0) {
+    if($('#category-filter option:contains("'+ a.category + '")').length === 0) {
       $('#category-filter').append(a.toHtml('#category-filter-template'));
     };
   });
