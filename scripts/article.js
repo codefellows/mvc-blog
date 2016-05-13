@@ -1,12 +1,8 @@
 var articles = [];
 
 function Article (opts) {
-  this.author = opts.author;
-  this.authorUrl = opts.authorUrl;
-  this.title = opts.title;
-  this.category = opts.category;
-  this.body = opts.body;
-  this.publishedOn = opts.publishedOn;
+  for (keys in opts) {
+    this[keys] = opts[keys];
 }
 
 Article.prototype.toHtml = function() {
@@ -19,16 +15,10 @@ Article.prototype.toHtml = function() {
   return template(this);
 };
 
-if (typeof rawData !== 'undefined') {
-  rawData.sort(function(a,b) {
+  ourLocalData.sort(function(a,b) {
     return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
   });
 
-  rawData.forEach(function(ele) {
+  ourLocalData.forEach(function(ele) {
     articles.push(new Article(ele));
-  })
-}
-
-articles.forEach(function(a){
-  $('#articles').append(a.toHtml())
-});
+  });

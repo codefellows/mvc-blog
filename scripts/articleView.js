@@ -1,19 +1,14 @@
 // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
 var articleView = {};
 
-articleView.populateFilters = function() {
-  $('article').each(function() {
-    if (!$(this).hasClass('template')) {
-      var val = $(this).find('address a').text();
-      var optionTag = '<option value="' + val + '">' + val + '</option>';
-      $('#author-filter').append(optionTag);
+articleView.generateArticleSection = function() {
+  articles.forEach(function(a) {
+    $('#articles').append(a.toHtml('#article-template'));
+    $('#author-filter').append(a.toHtml('#author-filter-template'));
 
-      val = $(this).attr('data-category');
-      optionTag = '<option value="' + val + '">' + val + '</option>';
-      if ($('#category-filter option[value="' + val + '"]').length === 0) {
-        $('#category-filter').append(optionTag);
-      }
-    }
+    if($('#category-filter option:contains("'+ a.category + '")').length === 0) {
+      $('#category-filter').append(a.toHtml('#category-filter-template'));
+    };
   });
 };
 
@@ -78,7 +73,7 @@ articleView.initNewArticlePage = function() {
 
 articleView.create = function() {
   // TODO: Set up a var to hold the new article we are creating.
-  // Clear out the #articles element, so we can put in the updated preview
+  // TODO: Clear out the #articles element, so we can put in the updated preview
   var formArticle;
   $('#article-preview').empty();
   // TODO: Instantiate an article based on what's in the form fields:
@@ -109,7 +104,7 @@ articleView.create = function() {
 
 
 articleView.initIndexPage = function() {
-  articleView.populateFilters();
+  articleView.generateArticleSection();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
   articleView.handleMainNav();
