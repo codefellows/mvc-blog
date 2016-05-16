@@ -94,5 +94,5 @@ Article.getAll = function() {
     articleView.initIndexPage();
   });
 };
-
+  END STRETCH GOAL
 */
