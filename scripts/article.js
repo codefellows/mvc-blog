@@ -1,10 +1,7 @@
   function Article (opts) {
-  this.author = opts.author;
-  this.authorUrl = opts.authorUrl;
-  this.title = opts.title;
-  this.category = opts.category;
-  this.body = opts.body;
-  this.publishedOn = opts.publishedOn;
+    for(key in opts) {
+      this[key] = opts[key];
+    }
 }
 
 // DONE: Instead of a global `articles = []` array, let's track this list of all articles directly on the
@@ -14,8 +11,8 @@
 // the prototype, as that would only be relevant to a single instantiated Article.
 Article.all = [];
 
-Article.prototype.toHtml = function() {
-  var template = Handlebars.compile($('#article-template').text());
+Article.prototype.toHtml = function(scriptTemplateId) {
+  var template = Handlebars.compile((scriptTemplateId).html());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
   this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
@@ -31,12 +28,12 @@ Article.prototype.toHtml = function() {
 // DONE: This function will take our data, how ever it is provided,
 // and use it to instantiate all the articles. This code is moved from elsewhere, and
 // encapsulated in a simply-named function for clarity.
-Article.loadAll = function(dataPassedIn) {
-  dataPassedIn.sort(function(a,b) {
+Article.loadAll = function(dataWePassIn) {
+  dataWePassIn.sort(function(a,b) {
     return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
   });
 
-  dataPassedIn.forEach(function(ele) {
+  dataWePassIn.forEach(function(ele) {
     Article.all.push(new Article(ele));
   })
 }

@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
-    <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
-
+    <!-- Code Fellows favicon -->
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/7v5ASc8.png">
     <script id="article-template" type="text/x-handlebars-template">
       <article class="clearfix" data-author="{{author}}" data-category="{{category}}">
         <header>
@@ -24,6 +24,12 @@
         <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
+    <script id="author-filter-template" type="text/x-handlebars-template">
+      <option value="{{author}}">{{author}}</option>
+     </script>
+     <script id="category-filter-template" type="text/x-handlebars-template">
+      <option value="{{category}}">{{category}}</option>
+     </script>
   </head>
   <body>
     <header class="site-header clearfix">
@@ -34,12 +40,13 @@
         <h2>The shocking power of static pages</h2>
       </section>
       <nav class="main-nav">
+        <!-- Hamburger Menu -->
         <div class="icon-menu"></div>
         <ul>
           <li class="tab" data-content="articles"><a href="#" class="icon-home"> Home</a></li>
           <li class="tab" data-content="about"><a href="#" class="icon-address-book"> About</a></li>
-          <li><a href="http://twitter.com/brookr" target="_blank" class="icon-twitter3"> Twitter</a></li>
-          <li><a href="http://github.com/brookr" target="_blank" class="icon-github"> GitHub</a></li>
+          <li><a href="http://twitter.com/codefellowsSEA" target="_blank" class="icon-twitter3"> Twitter</a></li>
+          <li><a href="http://github.com/" target="_blank" class="icon-github"> GitHub</a></li>
         </ul>
       </nav>
     </header>
@@ -75,7 +82,7 @@
       </section>
     </main>
     <footer>
-      &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
+      &copy; 2016 Code Fellows | Static Blog | Happy Ipsum!
     </footer>
 
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>

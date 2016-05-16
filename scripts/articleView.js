@@ -1,23 +1,6 @@
 // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
 var articleView = {};
 
-articleView.populateFilters = function() {
-  $('article').each(function() {
-    if (!$(this).hasClass('template')) {
-      var val = $(this).find('address a').text();
-      var optionTag = '<option value="' + val + '">' + val + '</option>';
-      if ($('#author-filter option[value="' + val + '"]').length === 0) {
-        $('#author-filter').append(optionTag);
-      }
-
-      val = $(this).attr('data-category');
-      optionTag = '<option value="' + val + '">' + val + '</option>';
-      if ($('#category-filter option[value="' + val + '"]').length === 0) {
-        $('#category-filter').append(optionTag);
-      }
-    }
-  });
-};
 
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
@@ -55,6 +38,9 @@ articleView.handleMainNav = function() {
 };
 
 articleView.setTeasers = function() {
+  $('h2').prev('p').remove();
+  $('h2').next('p').remove();
+
   $('.article-body *:nth-of-type(n+2)').hide(); // Hide elements beyond the first 2 in any artcile body.
 
   $('#articles').on('click', 'a.read-on', function(e) {
@@ -68,18 +54,18 @@ articleView.initNewArticlePage = function() {
   $('.tab-content').show();
   $('#export-field').hide();
   $('#article-json').on('focus', function(){
-    this.select();
+    $(this).select();
   });
 
   $('#new-form').on('change', 'input, textarea', articleView.create);
 };
 
 articleView.create = function() {
-  var article;
+  var formArticle;
   $('#articles').empty();
 
   // Instantiate an article based on what's in the form fields:
-  article = new Article({
+  formArticle = new Article({
     title: $('#article-title').val(),
     author: $('#article-author').val(),
     authorUrl: $('#article-author-url').val(),
@@ -89,7 +75,7 @@ articleView.create = function() {
   });
 
   // Use the Handblebars template to put this new article into the DOM:
-  $('#articles').append(article.toHtml());
+  $('#articles').append(formArticle.toHtml());
 
   // Activate the highlighting of any code blocks:
   $('pre code').each(function(i, block) {
@@ -104,10 +90,15 @@ articleView.create = function() {
 
 articleView.initIndexPage = function() {
   Article.all.forEach(function(a){
-    $('#articles').append(a.toHtml());
+    if($('#category-filter option:contains("'+ a.category + '")').length === 0) {
+      $('#category-filter').append(a.toHtml($('#category-filter-template')));
+    };
+    if($('#author-filter option:contains("'+ a.author + '")').length === 0) {
+      $('#author-filter').append(a.toHtml($('#author-filter-template')));
+    };
+    $('#articles').append(a.toHtml($('#article-template')));
   });
 
-  articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
   articleView.handleMainNav();
