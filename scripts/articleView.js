@@ -5,22 +5,6 @@
   // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
   var articleView = {};
 
-  articleView.populateFilters = function() {
-    $('article').each(function() {
-      if (!$(this).hasClass('template')) {
-        var val = $(this).find('address a').text();
-        var optionTag = '<option value="' + val + '">' + val + '</option>';
-        $('#author-filter').append(optionTag);
-
-        val = $(this).attr('data-category');
-        optionTag = '<option value="' + val + '">' + val + '</option>';
-        if ($('#category-filter option[value="' + val + '"]').length === 0) {
-          $('#category-filter').append(optionTag);
-        }
-      }
-    });
-  };
-
   articleView.handleAuthorFilter = function() {
     $('#author-filter').on('change', function() {
       if ($(this).val()) {
@@ -57,6 +41,8 @@
   };
 
   articleView.setTeasers = function() {
+    $('h2').prev('p').remove();
+    $('h2').next('p').remove();
     $('.article-body *:nth-of-type(n+2)').hide();
 
     $('#articles').on('click', 'a.read-on', function(e) {
@@ -103,10 +89,15 @@
 
   articleView.initIndexPage = function() {
     Article.all.forEach(function(a){
-      $('#articles').append(a.toHtml())
+      if($('#category-filter option:contains("'+ a.category + '")').length === 0) {
+        $('#category-filter').append(a.toHtml($('#category-filter-template')));
+      };
+      if($('#author-filter option:contains("'+ a.author + '")').length === 0) {
+        $('#author-filter').append(a.toHtml($('#author-filter-template')));
+      };
+      $('#articles').append(a.toHtml($('#article-template')));
     });
 
-    articleView.populateFilters();
     articleView.handleCategoryFilter();
     articleView.handleAuthorFilter();
     articleView.handleMainNav();
@@ -114,8 +105,8 @@
   };
 
   articleView.initAdminPage = function() {
-    // TODO: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
-    var template = Handlebars.compile($('#author-template').text());
+    // DONE: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
+    var template = Handlebars.compile($('#author-template').html());
 
     // DONE: We use `forEach` here because we are relying on the side-effects of the callback function:
     // appending to the DOM.

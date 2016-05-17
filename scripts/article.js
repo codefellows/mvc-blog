@@ -2,12 +2,9 @@
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
 (function(module) {
   function Article (opts) {
-    this.author = opts.author;
-    this.authorUrl = opts.authorUrl;
-    this.title = opts.title;
-    this.category = opts.category;
-    this.body = opts.body;
-    this.publishedOn = opts.publishedOn;
+    for (key in opts) {
+      this[key] = opts[key];
+    }
   }
 
   Article.all = [];
