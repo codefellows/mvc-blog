@@ -2,15 +2,15 @@
   function Article (opts) {
     // DONE: Convert property assignment to Functional Programming style. Now, ALL properties of `opts` will be
     // assigned as properies of the newly created article object.
-    Object.keys(opts).forEach(function(e, index, keys) {
-      this[e] = opts[e];
+    Object.keys(opts).forEach(function(prop, index, keys) {
+      this[prop] = opts[prop];
     },this);
   }
 
   Article.all = [];
 
-  Article.prototype.toHtml = function() {
-    var template = Handlebars.compile($('#article-template').text());
+  Article.prototype.toHtml = function(scriptTemplateId) {
+    var template = Handlebars.compile(scriptTemplateId.text());
 
     this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
     this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
@@ -158,7 +158,7 @@
   Article.stats = function() {
     return {
       numArticles: Article.all.length,
-      numWords: Article.numwordsAll(),
+      numWords: Article.numWordsAll(),
       Authors: Article.allAuthors(),
     };
   };
