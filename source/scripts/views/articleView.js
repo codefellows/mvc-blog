@@ -3,24 +3,6 @@
   // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
   var articleView = {};
 
-  articleView.populateFilters = function() {
-    $('article').each(function() {
-      if (!$(this).hasClass('template')) {
-        var val = $(this).find('address a').text();
-        var optionTag = '<option value="' + val + '">' + val + '</option>';
-        // Done: Ensure authors listed in the filter are unique
-        if ($('#author-filter option[value="' + val + '"]').length === 0) {
-          $('#author-filter').append(optionTag);
-        }
-
-        val = $(this).attr('data-category');
-        optionTag = '<option value="' + val + '">' + val + '</option>';
-        if ($('#category-filter option[value="' + val + '"]').length === 0) {
-          $('#category-filter').append(optionTag);
-        }
-      }
-    });
-  };
 
   articleView.handleAuthorFilter = function() {
     $('#author-filter').on('change', function() {
@@ -54,6 +36,9 @@
   //  This is where handleMainNav used to be!
 
   articleView.setTeasers = function() {
+    $('a.read-on').show();
+    $('h2').prev('p').remove();
+    $('h2').next('p').remove();
     $('.article-body *:nth-of-type(n+2)').hide();
 
     $('#articles').on('click', 'a.read-on', function(e) {
@@ -74,7 +59,7 @@
   };
 
   articleView.create = function() {
-    var article;
+    var formArticle;
     $('#articles').empty();
 
     // Instantiate an article based on what's in the form fields:
@@ -84,10 +69,10 @@
       authorUrl: $('#article-author-url').val(),
       category: $('#article-category').val(),
       body: $('#article-body').val(),
-      publishedOn: $('#article-published:checked').length ? util.today() : null
+      publishedOn: $('#article-published:checked').length ? new Date() : null
     });
 
-    $('#articles').append(article.toHtml());
+    $('#articles').append(formArticle.toHtml($('#article-template')));
 
     $('pre code').each(function(i, block) {
       hljs.highlightBlock(block);
@@ -99,14 +84,16 @@
   };
 
   articleView.initIndexPage = function() {
-    // Only append the first time!
-    if($('#articles section').length === 0) {
-      Article.all.forEach(function(a){
-        $('#articles').append(a.toHtml());
-      });
-    };
+    Article.all.forEach(function(a){
+      if($('#category-filter option:contains("'+ a.category + '")').length === 0) {
+        $('#category-filter').append(a.toHtml($('#category-filter-template')));
+      };
+      if($('#author-filter option:contains("'+ a.author + '")').length === 0) {
+        $('#author-filter').append(a.toHtml($('#author-filter-template')));
+      };
+      $('#articles').append(a.toHtml($('#article-template')));
+    });
 
-    articleView.populateFilters();
     articleView.handleCategoryFilter();
     articleView.handleAuthorFilter();
     articleView.setTeasers();

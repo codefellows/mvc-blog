@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
-    <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
+    <!-- Code Fellows favicon -->
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/7v5ASc8.png">
 
     <script id="article-template" type="text/x-handlebars-template">
       <article class="clearfix" data-author="{{author}}" data-category="{{category}}">
@@ -24,7 +25,12 @@
         <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
-
+    <script id="author-filter-template" type="text/x-handlebars-template">
+      <option value="{{author}}">{{author}}</option>
+    </script>
+    <script id="category-filter-template" type="text/x-handlebars-template">
+      <option value="{{category}}">{{category}}</option>
+    </script>
     <script id="author-template" type="text/x-handlebars-template">
       <li><strong>{{name}}</strong>: {{numWords}} words written</li>
     </script>
@@ -90,23 +96,25 @@
       </section>
     </main>
     <footer>
-      &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
+      &copy; 2016 Code Fellows | Static Blog | Happy Ipsum!
     </footer>
-    <!-- TODO: Be sure to include the routing functionality with the correct script files: -->
-
+    <!-- Vendor Files -->
     <script src="vendor/scripts/jquery-2.1.4.js"></script>
     <script src="vendor/scripts/handlebars.js"></script>
     <script src="vendor/scripts/marked.js"></script>
     <script src="vendor/scripts/html5sql.js"></script>
     <script src="vendor/scripts/webdb.js"></script>
     <script src="vendor/scripts/page.js"></script>
+    <!-- TODO: Be sure to include the routing functionality with the correct script files: -->
 
-    <script src="scripts/article.js"></script>
-    <script src="scripts/articleView.js"></script>
-    <script src="scripts/controllers/articleController.js"></script>
+    <!-- Model Files -->
+    <script src="scripts/models/article.js"></script>
+    <!-- Controller Files -->
     <script src="scripts/controllers/adminController.js"></script>
     <script src="scripts/controllers/aboutController.js"></script>
-
-    <script src="scripts/routes.js"></script>
+    <script src="scripts/controllers/articleController.js"></script>
+    <!-- View Files -->
+    <script src="scripts/views/articleView.js"></script>
+    <script src="scripts/controllers/routes.js"></script>
   </body>
 </html>
