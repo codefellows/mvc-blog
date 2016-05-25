@@ -2,8 +2,7 @@
   var adminController = {
     index: function() {
       Article.fetchAll(articleView.initAdminPage);
-      $('main > section').hide();
-      $('#blog-stats').show();
+      $('#blog-stats').show().siblings().hide();
     }
   }
   module.adminController = adminController;
