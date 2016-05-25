@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/modules.css">
-    <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
+    <!-- Code Fellows favicon -->
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/7v5ASc8.png">
 
     <script id="article-template" type="text/x-handlebars-template">
       <article class="clearfix" data-author="{{author}}" data-category="{{category}}">
@@ -24,16 +25,20 @@
         <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
-
+    <script id="author-filter-template" type="text/x-handlebars-template">
+      <option value="{{author}}">{{author}}</option>
+    </script>
+    <script id="category-filter-template" type="text/x-handlebars-template">
+      <option value="{{category}}">{{category}}</option>
+    </script>
     <script id="author-template" type="text/x-handlebars-template">
       <li><strong>{{name}}</strong>: {{numWords}} words written</li>
     </script>
-
     <script id="repo-template" type="text/x-handlebars-template">
       <li>
         <a href="{{html_url}}" target="_blank"><h3>{{name}}</h3></a>
         <p>Description: {{description}}</p>
-        <p>Language: {{language}}</p>
+        <p>Primary Language: {{language}}</p>
         <p>Created: {{created_at}}</p>
         <p>Last updated: {{updated_at}}</p>
         {{#if watchers_count}}
@@ -56,7 +61,7 @@
           <li class="tab" data-content="articles"><a href="/" class="icon-home"> Home</a></li>
           <li class="tab" data-content="about"><a href="/about" class="icon-address-book"> About</a></li>
           <li class="tab" data-content="admin"><a href="/admin" class="icon-rocket">Admin</a></li>
-          <li><a href="http://twitter.com/codefellows" target="_blank" class="icon-twitter3"> Twitter</a></li>
+          <li><a href="http://twitter.com/codefellowsSEA" target="_blank" class="icon-twitter3"> Twitter</a></li>
           <li><a href="http://github.com/" target="_blank" class="icon-github"> GitHub</a></li>
         </ul>
       </nav>
@@ -100,7 +105,7 @@
       </section>
     </main>
     <footer>
-      &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
+      &copy; 2016 Code Fellows | Static Blog | Happy Ipsum!
     </footer>
 
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
@@ -121,7 +126,7 @@
     <script src="/scripts/controller/aboutController.js"></script>
     <script src="/scripts/controller/adminController.js"></script>
 
-    <script src="/scripts/routes.js"></script>
+    <script src="/scripts/controller/routes.js"></script>
 
     <!-- TODO: Our githubToken.js file is gone! Where instead can we securely place our token?-->
 

@@ -3,9 +3,10 @@
 
   repos.all = [];
 
-  // TODO: Convert this ajax call into a get request to the proxy end point provided by server.js.
+  /* TODO: Convert this $.ajax() call into a $.get() call
+      to the proxy end point provided by server.js. */
   repos.requestRepos = function(callback) {
-    $.get('/github/users/codefellows/repos' +
+    $.get('/github/users/codefellows-seattle-301d4/repos' +
           '?per_page=10' +
           '&sort=updated')
     .done(function(data) {
