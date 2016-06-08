@@ -1,5 +1,4 @@
 var articles = [];
-var categories = [];
 
 function Article (opts) {
   this.author = opts.author;
