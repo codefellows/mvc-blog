@@ -7,9 +7,14 @@ body {
   color: #313131;
 }
 
-hr {
-  margin: 1em;
-  width: 80%;
+img {
+  max-width: 100%;
+}
+
+article {
+  border-bottom: 2px solid black;
+  margin: 0 2.5%;
+  padding: 2% 0;
 }
 
 /*TEXT STYLES
