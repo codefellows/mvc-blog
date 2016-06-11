@@ -13,9 +13,13 @@ main {
   width: 90%;
 }
 
-hr {
-  margin: 1em;
-  width: 80%;
+article {
+  max-width: 50%;
+}
+
+form {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid red;
 }
 
 /*TEXT STYLES

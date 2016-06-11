@@ -39,10 +39,6 @@
   list-style: none;
 }
 
-.template {
-  display: none;
-}
-
 .byline {
   color: #777;
 }
@@ -50,6 +46,17 @@
 .byline a {
   font-weight: bold;
   text-decoration: none;
+}
+
+#article-preview p {
+  text-align: left;
+  padding-left: 2.5rem;
+}
+
+.preview {
+  text-align: center;
+  border: 2rem solid;
+  margin: 0 auto;
 }
 
 #article-export label {

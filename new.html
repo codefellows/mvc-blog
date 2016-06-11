@@ -14,7 +14,7 @@
 
     <script id="article-template" type="text/x-handlebars-template">
       <article
-        class="clearfix"
+        class="clearfix preview"
         data-author="{{author}}"
         data-category="{{category}}">
         <header>
@@ -25,7 +25,6 @@
           </div>
         </header>
         <section class="article-body">{{{body}}}</section>
-        <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
     </head>
@@ -49,7 +48,7 @@
       <section id="write" class="tab-content">
         <h1>New Article</h1>
         <!-- DONE: Set up a form to accept user input for a new blog article: -->
-        <form action="#" id="new-form">
+        <form id="new-form">
           <label>
             <input type="text" id="article-title" placeholder="Article title" required>
           </label>
@@ -87,12 +86,8 @@
     <!-- DONE: Include script tags for 3rd party libraries to enable markdown rendering and code syntax highlighting -->
     <script src="/vendor/scripts/marked.js"></script>
     <script src="/vendor/scripts/highlight.pack.js"></script>
-
+    <script src="/scripts/blogArticles.js"></script>
     <script src="/scripts/article.js"></script>
     <script src="/scripts/articleView.js"></script>
-    <script>
-      // DONE: Initialize page behaviors, and run code:
-      articleView.initNewArticlePage();
-    </script>
   </body>
 </html>

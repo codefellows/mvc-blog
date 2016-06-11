@@ -5,9 +5,12 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
 */
 
 .hljs {
-  display: block;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
   overflow-x: auto;
   padding: 0.5em;
+  padding-left: 2.5rem;
   background: #232323;
   color: #e6e1dc;
   -webkit-text-size-adjust: none;
