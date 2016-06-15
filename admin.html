@@ -42,17 +42,16 @@
       </section>
     </main>
     <footer>
-      &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
+      &copy; 2016 Code Fellows | Static Blog | Happy Ipsum!
     </footer>
-
+    <!-- Vendor Files -->
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/handlebars.js"></script>
+    <script src="/vendor/scripts/marked.js"></script>
+    <!-- Model Files -->
     <script src="/scripts/article.js"></script>
+    <!-- View Files -->
     <script src="/scripts/articleView.js"></script>
-    <script>
-      // TODO: After we fetch and load all the articles, what view function do we want to run next?
-      // Let's pass in a callback function, to determine what happens AFTER all articles are loaded.
-      Article.fetchAll(articleView.initAdminPage);
-    </script>
+    <script src="/scripts/adminPage.js"></script>
   </body>
 </html>

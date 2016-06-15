@@ -9,31 +9,24 @@
 
   Article.all = [];
 
-  Article.prototype.toHtml = function() {
-    var template = Handlebars.compile($('#article-template').text());
-
+  Article.prototype.toHtml = function(scriptTemplateId) {
+    var template = Handlebars.compile($(scriptTemplateId).text());
     this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
-    this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
+    if(this.daysAgo < 1) {
+      this.publishStatus = '(published today)';
+    } else {
+      this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
+    }
     this.body = marked(this.body);
-
     return template(this);
   };
-
   Article.loadAll = function(passedInData) {
-    passedInData.sort(function(a,b) {
-      return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
-    });
-
-    // TODO: Refactor this forEach code by using `.map()` - since
-    // what we are trying to accomplish
+    // NOTE: Let's refactor this forEach code by using `.map()`
+    // since what we are trying to accomplish
     // is the transformation of one colleciton into another.
-
-    /* OLD forEach():
-    passedInData.forEach(function(ele) {
-      Article.all.push(new Article(ele));
-    });
-    */
-    Article.all = passedInData.map(function(ele) {
+    Article.all = passedInData.sort(function(a,b) {
+      return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
+    }).map(function(ele) {
       return new Article(ele);
     });
   };
@@ -107,7 +100,7 @@
   // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
   Article.numWordsAll = function() {
     return Article.all.map(function(article) { // map the entire Article.all collection
-      return article.body.match(/\b\w+/g).length;  // regexp matching word instances
+      return article.body.match(/\w+/g).length;  // regexp matching word instances
     })
     .reduce(function(a, b) {
       return a + b;  // now sum the total number of words!
@@ -142,7 +135,7 @@
           return a.author === author; // only return articles when the author names match.
         })
         .map(function(a) {
-          return a.body.match(/\b\w+/g).length  // map this new author article collection based on
+          return a.body.match(/\w+/g).length  // map this new author article collection based on
           // a regexp matching words, so the new array collection will now be all the words written
           // by the current author.
         })

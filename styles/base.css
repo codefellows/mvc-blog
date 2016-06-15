@@ -13,9 +13,8 @@ main {
   width: 90%;
 }
 
-hr {
-  margin: 1em;
-  width: 80%;
+article {
+  display: block;
 }
 
 /*TEXT STYLES
